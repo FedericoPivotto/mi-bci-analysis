@@ -1,2 +1,2 @@
-# Neurorobotics project
-Neurorobotics project.
+# Neurorobotics Project
+Neurorobotics Project.
