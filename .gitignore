@@ -31,7 +31,7 @@ codegen/
 octave-workspace
 
 # Matlab toolboxes
-toolboxes/
+toolbox/
 
 # Dataset
 dataset/
