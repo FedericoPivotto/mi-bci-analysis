@@ -20,7 +20,7 @@ addpath(genpath('C:\Users\feder\Documents\GitHub\mi-bci-analysis\toolbox\eeglab\
 ```
 
 # Instructions
-1.
+1. INSTRUCTION
 
 # Authors
 - Federico Pivotto, 2121720, federico.pivotto@studenti.unipd.it
