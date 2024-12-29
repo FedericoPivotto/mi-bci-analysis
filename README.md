@@ -1,8 +1,29 @@
 # MI BCI Analysis
 Analysis of data collected during a 3-day Motor Imagery (MI) Brain-Computer Interface (BCI) experiment involving 8 healthy participants.
 
-## Report
-OverLeaf: https://www.overleaf.com/9146575821jhxjqvbrdynv#3b2c30
+## TODO
+
+### Analysis
+- `generation.m` (Federico)
+- `compute_topoplot.m` (Alessandro)
+- `compute_spectrogram.m` (Riccardo)
+- `compute_featuremap.m` (Zerby)
+- `analysis.m`
+
+### Classification
+- `train_model.m`
+- `training.m`
+- `evaluate_model.m`
+- `evaluation.m`
+
+### Deadline
+05/01/2025
+
+### Questions
+- Grand average analysis on the concatenation of the concatenations? Maybe only about the offline recordings.
+
+### Report
+https://www.overleaf.com/9146575821jhxjqvbrdynv#3b2c30
 
 ## MATLAB Toolbox
 
@@ -38,27 +59,6 @@ https://cloud.dei.unipd.it/index.php/s/DLJfJccgFnFiDZY
 4. Run `analysis.m` script.
 5. Run `training.m` script.
 6. Run `evaluation.m` script.
-
-## TODO
-
-### Analysis
-- `generation.m` (Federico)
-- `compute_topoplot.m` (Alessandro)
-- `compute_spectrogram.m` (Riccardo)
-- `compute_featuremap.m` (Zerby)
-- `analysis.m`
-
-### Classification
-- `train_model.m`
-- `training.m`
-- `evaluate_model.m`
-- `evaluation.m`
-
-### Deadline
-05/01/2025
-
-## Questions
-- Grand average analysis on the concatenation of the concatenations? Maybe only about the offline recordings.
 
 ## Authors
 - Federico Pivotto, 2121720, federico.pivotto@studenti.unipd.it
