@@ -16,7 +16,7 @@ addpath(genpath('<absolute-path>\mi-bci-analysis\toolbox\biosig\biosig\t250_Arti
 ## `eeglab`
 ```matlab
 disp('[config] - Adding eeglab toolbox');
-addpath(genpath('C:\Users\feder\Documents\GitHub\mi-bci-analysis\toolbox\eeglab\eeglab2024.2'));
+addpath(genpath('<absolute-path>\mi-bci-analysis\toolbox\eeglab\eeglab2024.2'));
 ```
 
 # Instructions
@@ -24,6 +24,6 @@ addpath(genpath('C:\Users\feder\Documents\GitHub\mi-bci-analysis\toolbox\eeglab\
 
 # Authors
 - Federico Pivotto, 2121720, federico.pivotto@studenti.unipd.it
-- Alessandro Bozzon, ID, EMAIL
-- Riccardo Simion, ID, EMAIL
+- Alessandro Bozzon, 2122185, alessandro.bozzon@studenti.unipd.it
+- Riccardo Simion, 2157564, riccardo.simion@studenti.unipd.it
 - Riccardo Zerbinati, 2158676, riccardo.zerbinati@studenti.unipd.it
