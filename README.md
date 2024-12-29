@@ -45,7 +45,7 @@ Link: https://cloud.dei.unipd.it/index.php/s/DLJfJccgFnFiDZY
 05/01/2025
 
 # Questions
-- Grand average on the concatenation of the concatenetions? Maybe only offline recordings.
+- Grand average analysis on the concatenation of the concatenations? Maybe only about the offline recordings.
 
 # Authors
 - Federico Pivotto, 2121720, federico.pivotto@studenti.unipd.it
