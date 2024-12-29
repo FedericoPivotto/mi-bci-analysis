@@ -23,8 +23,12 @@ addpath(genpath('<absolute-path>\mi-bci-analysis\toolbox\eeglab\eeglab2024.2'));
 Link: https://cloud.dei.unipd.it/index.php/s/DLJfJccgFnFiDZY
 
 # Instructions
-1. Create `dataset/` folder and insert the dataset.
+1. Create `dataset/` folder and insert `micontinuous` dataset.
 2. Create `toolbox/` folder and insert `biosig` and `eeglab` toolboxes.
+3. Run `generation.m` script.
+4. Run `analysis.m` script.
+5. Run `training.m` script.
+6. Run `evaluation.m` script.
 
 # TODO
 
