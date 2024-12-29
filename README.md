@@ -28,7 +28,7 @@ Each participant completed at least two recording days:
 (with real feedback).
 - Day 2 and Day 3: 2 "online" runs per day.
 
-#### Resource
+### Resource
 https://cloud.dei.unipd.it/index.php/s/DLJfJccgFnFiDZY
 
 ## Instructions
