@@ -27,15 +27,22 @@ Link: https://cloud.dei.unipd.it/index.php/s/DLJfJccgFnFiDZY
 2. Create `toolbox/` folder and insert `biosig` and `eeglab` toolboxes.
 
 # TODO
-- `generation.m`
-- `compute_topoplot.m`
-- `compute_spectrogram.m`
-- `compute_featuremap.m`
+
+## Analysis
+- `generation.m` (Federico)
+- `compute_topoplot.m` (Alessandro)
+- `compute_spectrogram.m` (Riccardo)
+- `compute_featuremap.m` (Zerby)
 - `analysis.m`
+
+## Classification
 - `train_model.m`
 - `training.m`
 - `evaluate_model.m`
 - `evaluation.m`
+
+## Deadline
+05/01/2025
 
 # Questions
 - Grand average on the concatenation of the concatenetions? Maybe only offline recordings.
