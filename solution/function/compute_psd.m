@@ -1,5 +1,5 @@
 %% Function to load and process the given GDF file
-function save_psd(dirpath_in, filename, fileext, dirpath_out)
+function compute_psd(dirpath_in, filename, fileext, dirpath_out)
     % Load the offline GDF file
     filepath = [dirpath_in, filename, fileext];
     [s, h] = sload(filepath);

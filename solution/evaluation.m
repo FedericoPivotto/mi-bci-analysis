@@ -1,6 +1,8 @@
 %% Workspace setup
 clc; close all; clear;
 
+%% TODO: adapt this script (LAB7) to our structure and to evaluate the model of each subject and the whole population.
+
 %% Objective
 % Implement a classification and control framework using MATLAB to process data, compute Fisher scores, train a model, and evaluate performance using evidence accumulation.
 

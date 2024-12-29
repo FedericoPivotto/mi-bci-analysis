@@ -23,6 +23,12 @@ subject = {
     'aj9_micontinuous' ...
 };
 
+% TODO: For each subject, concatenate separately the offline and online GDFs and save them inside the corresponding directory in the dataset directory
+
+% TODO: For the whole population, concatenate all the offline concatenations in one GDF
+
+% TODO: For the whole population, concatenate all the online concatenations in one GDF
+
 % Scan each subject
 for i = 1:size(subject, 2)
     dirpath_subject = cell2mat(strcat(dirpath_dataset, subject(i), '/'));
@@ -32,6 +38,6 @@ for i = 1:size(subject, 2)
     filename = strrep({files.name}, fileext, '');
     for j = 1:size(filename, 2)
         dirpath_psd = strcat('psd/', dataset, '/', subject(i), '/');
-        save_psd(dirpath_subject, char(filename(j)), fileext, char(dirpath_psd));
+        compute_psd(dirpath_subject, char(filename(j)), fileext, char(dirpath_psd));
     end
 end
