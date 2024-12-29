@@ -19,8 +19,12 @@ disp('[config] - Adding eeglab toolbox');
 addpath(genpath('<absolute-path>\mi-bci-analysis\toolbox\eeglab\eeglab2024.2'));
 ```
 
+# Dataset
+Link: https://cloud.dei.unipd.it/index.php/s/DLJfJccgFnFiDZY
+
 # Instructions
-1. INSTRUCTION
+1. Create `dataset/` folder and insert the dataset.
+2. Create `toolbox/` folder and insert `biosig` and `eeglab` toolboxes.
 
 # Authors
 - Federico Pivotto, 2121720, federico.pivotto@studenti.unipd.it
