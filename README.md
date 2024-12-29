@@ -4,17 +4,17 @@ Analysis of data collected during a 3-day Motor Imagery (MI) Brain-Computer Inte
 ## TODO
 
 ### Analysis
-- [] `generation.m` (Federico)
-- [] `compute_topoplot.m` (Alessandro)
-- [] `compute_spectrogram.m` (Riccardo)
-- [] `compute_featuremap.m` (Zerby)
-- [] `analysis.m`
+- [ ] `generation.m` (Federico)
+- [ ] `compute_topoplot.m` (Alessandro)
+- [ ] `compute_spectrogram.m` (Riccardo)
+- [ ] `compute_featuremap.m` (Zerby)
+- [ ] `analysis.m`
 
 ### Classification
-- [] `train_model.m`
-- [] `training.m`
-- [] `evaluate_model.m`
-- [] `evaluation.m`
+- [ ] `train_model.m`
+- [ ] `training.m`
+- [ ] `evaluate_model.m`
+- [ ] `evaluation.m`
 
 ### Deadline
 05/01/2025
