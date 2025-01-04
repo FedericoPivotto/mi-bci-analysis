@@ -41,5 +41,5 @@ function compute_psd(dirpath_in, filename, fileext, dirpath_out)
     if ~exist(char(dirpath_out), 'dir')
        mkdir(char(dirpath_out));
     end
-    save(char(strcat(dirpath_out, filename, '.mat')), 'PSD', 'PSD_params', 'FREQ', 'FREQ_subset', 'FREQ_index', 'EVENT');
+    save(char(strcat(dirpath_out, filename, '.mat')), 'PSD', 'PSD_params', 'FREQ', 'FREQ_subset', 'FREQ_index', 'EVENT', '-v7.3');
 end

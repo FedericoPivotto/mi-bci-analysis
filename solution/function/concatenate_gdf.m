@@ -1,14 +1,14 @@
 %% Function to concatenate and save the given GDF files
-function concatenate_gdf(dirpath_in, filename, fileext, dirpath_out, filenames)
+function concatenate_gdf(filename, dirpath_out, filepaths)
     % Pre-condition
-    if size(filenames, 2) < 1
+    if size(filepaths, 2) < 1
         return
     end
 
     % Scan each GDF file
-    for i = 1:size(filenames, 2)
+    for i = 1:size(filepaths, 2)
         % Load signal and header
-        filepath = char(strcat(dirpath_in, char(filenames(i)), fileext));
+        filepath = char(filepaths(i));
         [file{i}.s, file{i}.h] = sload(filepath);
     end
 
@@ -23,9 +23,7 @@ function concatenate_gdf(dirpath_in, filename, fileext, dirpath_out, filenames)
     h.InChanSelect = file{1}.h.InChanSelect;
     
     % Scan each signal from next
-    for i = 2:size(filenames, 2)
-        % TODO: Check header
-        
+    for i = 2:size(filepaths, 2)
         % Concatenate events
         h.EVENT.POS = [h.EVENT.POS; size(s, 1) + file{i}.h.EVENT.POS];
         h.EVENT.TYP = [h.EVENT.TYP; file{i}.h.EVENT.TYP];
@@ -40,5 +38,5 @@ function concatenate_gdf(dirpath_in, filename, fileext, dirpath_out, filenames)
     if ~exist(char(dirpath_out), 'dir')
        mkdir(char(dirpath_out));
     end
-    save(char(strcat(dirpath_out, filename, '.mat')), 's', 'h');
+    save(char(strcat(dirpath_out, filename, '.mat')), 's', 'h', '-v7.3');
 end

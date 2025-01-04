@@ -34,14 +34,15 @@ for i = 1:size(subject, 2)
 
     % Scan each GDF file
     filename = strrep({files.name}, fileext.gdf, '');
-    subject_filenames{i}.offline = [];
-    subject_filenames{i}.online = [];
+    subject_filepaths{i}.offline = [];
+    subject_filepaths{i}.online = [];
     for j = 1:size(filename, 2)
         % Save offline/online GDF filename
+        filepath = strcat(dirpath_subject, filename(j), fileext.gdf);
         if(contains(filename(j), 'offline'))
-            subject_filenames{i}.offline = [subject_filenames{i}.offline, filename(j)];
+            subject_filepaths{i}.offline = [subject_filepaths{i}.offline, filepath];
         elseif(contains(filename(j), 'online'))
-            subject_filenames{i}.online = [subject_filenames{i}.online, filename(j)];
+            subject_filepaths{i}.online = [subject_filepaths{i}.online, filepath];
         end
     end
 
@@ -50,18 +51,34 @@ for i = 1:size(subject, 2)
 
     % Concatenate and save offline GDF files
     subject_filename.offline = strcat(subject_id, '.offline.mi.mi_bhbf');
-    concatenate_gdf(dirpath_subject, subject_filename.offline, fileext.gdf, dirpath_gdf, subject_filenames{i}.offline);
+    concatenate_gdf(subject_filename.offline, dirpath_gdf, subject_filepaths{i}.offline);
     
     % Concatenate and save online GDF files
     subject_filename.online = strcat(subject_id, '.online.mi.mi_bhbf');
-    concatenate_gdf(dirpath_subject, subject_filename.online, fileext.gdf, dirpath_gdf, subject_filenames{i}.online);
+    concatenate_gdf(subject_filename.online, dirpath_gdf, subject_filepaths{i}.online);
 end
+
+% Collect population offline/online GDF filenames
+population_filepaths.offline = [];
+population_filepaths.online = [];
+for i = 1:size(subject, 2)
+    population_filepaths.offline = [population_filepaths.offline, subject_filepaths{i}.offline];
+    population_filepaths.online = [population_filepaths.online, subject_filepaths{i}.online];
+end
+% Directory in which save the concatenations
+dirpath_gdf = strcat('gdf/', dataset, '/population/');
+% Concatenate population offline GDF files
+population_filename.offline = 'population.offline.mi.mi_bhbf';
+concatenate_gdf(population_filename.offline, dirpath_gdf, population_filepaths.offline);
+% Concatenate population online GDF files
+population_filename.online = 'population.online.mi.mi_bhbf';
+concatenate_gdf(population_filename.online, dirpath_gdf, population_filepaths.online);
 
 % Scan each subject
 for i = 1:size(subject, 2)
-   % Directory in which save the PSD
+    % Directory in which save the PSD
     dirpath_psd = strcat('psd/', dataset, '/', subject(i), '/');
-
+    
     % Get GDF files in subject directory
     dirpath_subject = cell2mat(strcat(dirpath_dataset, subject(i), '/'));
     files = dir(fullfile(dirpath_subject, ['*', fileext.gdf]));
@@ -72,7 +89,7 @@ for i = 1:size(subject, 2)
     end
 
     % Get MAT files in subject directory
-    dirpath_gdf = ['gdf/', dataset, '/'];
+    dirpath_gdf = strcat('gdf/', dataset, '/');
     dirpath_subject = cell2mat(strcat(dirpath_gdf, subject(i), '/'));
     files = dir(fullfile(dirpath_subject, ['*', fileext.mat]));
     filename = strrep({files.name}, fileext.mat, '');
@@ -82,16 +99,13 @@ for i = 1:size(subject, 2)
     end
 end
 
-%{
-% TODO: Collect population offline/online GDF filenames
-for i = 1:size(subject, 2)
-    population_filenames.offline = [population_filenames.offline, subject_filenames{i}.offline];
-    population_filenames.online = [population_filenames.online, subject_filenames{i}.online];
+% Directory in which save the PSD
+dirpath_psd = strcat('psd/', dataset, '/population/');
+% Get MAT files in population directory
+dirpath_population = strcat('gdf/', dataset, '/population/');
+files = dir(fullfile('gdf', dataset, 'population', ['*', fileext.mat])); % dirpath_population, ['*', fileext.mat]));
+filename = strrep({files.name}, fileext.mat, '');
+% Process each MAT file and save PSD in MAT file
+for i = 1:size(filename, 2)
+    compute_psd(dirpath_population, filename(i), fileext.mat, dirpath_psd);
 end
-% TODO: Concatenate population offline GDF files
-population_filename.offline = 'population.offline.mi.mi_bhbf';
-concatenate_gdf(dirpath_subject, population_filename.offline, fileext.gdf, dirpath_gdf, population_filenames.offline);
-% TODO: Concatenate population online GDF files
-population_filename.online = 'population.online.mi.mi_bhbf';
-concatenate_gdf(dirpath_subject, population_filename.online, fileext.gdf, dirpath_gdf, population_filenames.online);
-%}
