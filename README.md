@@ -4,20 +4,20 @@ Analysis of data collected during a 3-day Motor Imagery (MI) Brain-Computer Inte
 ## TODO
 
 ### Analysis
-- [x] `generation.m` (Federico)
-- [ ] `compute_topoplot.m` (Alessandro)
-- [ ] `compute_spectrogram.m` (Riccardo)
-- [ ] `compute_featuremap.m` (Zerby)
-- [ ] `analysis.m`
+- [x] `generation.m`
+- [x] `compute_topoplot.m` (Zerby, save plot)
+- [x] `compute_spectrogram.m` (Zerby, save plot)
+- [x] `compute_featuremap.m` (Zerby, save plot)
+- [ ] `analysis.m` (Alessandro)
 
 ### Classification
-- [ ] `train_model.m`
-- [ ] `training.m`
-- [ ] `evaluate_model.m`
-- [ ] `evaluation.m`
+- [ ] `train_model.m` (Riccardo)
+- [ ] `evaluate_model.m` (Zerby)
+- [ ] `training.m` (Federico)
+- [ ] `evaluation.m`(Federico)
 
 ### Deadline
-05/01/2025
+10/01/2025
 
 ### Questions
 - Grand average analysis on the concatenation of the concatenations? Maybe only about the offline recordings.
@@ -67,9 +67,9 @@ https://cloud.dei.unipd.it/index.php/s/DLJfJccgFnFiDZY
 - Riccardo Zerbinati, 2158676, riccardo.zerbinati@studenti.unipd.it
 
 ### Contribution
-| Member             | Work        |
-| ------------------ | ----------- |
-| Federico Pivotto   | Generation  |
-| Alessandro Bozzon  | Topoplot    |
-| Riccardo Simion    | Spectrogram |
-| Riccardo Zerbinati | Feature map |
+| Member             | Work                                     |
+| ------------------ | ---------------------------------------- |
+| Federico Pivotto   | Generation, training-evaluation workflow |
+| Alessandro Bozzon  | Topoplot, analysis workflow              |
+| Riccardo Simion    | Spectrogram, model training              |
+| Riccardo Zerbinati | Feature map, model evaluation            |

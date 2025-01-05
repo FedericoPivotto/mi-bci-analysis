@@ -36,6 +36,7 @@ function compute_featuremap(dirpath_in, filename, fileext, dirpath_out)
         'YTickLabel', keys(channels), ...
         'YTick', values(channels));
 
+    % TODO: save in correct directory, if not exits, create it
     % Save the plot as an image (PNG format)
     image_filename = fullfile(dirpath_out, [filename, '_featuremap.png']);
     saveas(gcf, image_filename); % Save as PNG
