@@ -4,7 +4,7 @@ function compute_psd(dirpath_in, filename, fileext, dirpath_out)
     filepath = char(strcat(dirpath_in, filename, fileext));
     if fileext == '.gdf'
         [s, h] = sload(filepath);
-    else if fileext == '.mat'
+    elseif fileext == '.mat'
         res = load(filepath);
         s = res.s;
         h = res.h;

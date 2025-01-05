@@ -7,7 +7,7 @@ addpath('function/');
 %% Load and process each GDF file separately for both calibration and evaluation files, and save the result.
 
 % Dataset
-dataset = 'micontinuous';
+dataset = 'micontinuous_small';
 dirpath_dataset = ['../dataset/', dataset, '/'];
 fileext = struct('gdf', '.gdf', 'mat', '.mat');
 
