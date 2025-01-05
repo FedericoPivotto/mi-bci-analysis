@@ -1,12 +1,19 @@
 %% Function to load and process the given GDF file
 function compute_psd(dirpath_in, filename, fileext, dirpath_out)
-    % Load the offline GDF file
-    filepath = [dirpath_in, filename, fileext];
-    [s, h] = sload(filepath);
-    n_channels = h.NS - 1;
+    % Load signal and header
+    filepath = char(strcat(dirpath_in, filename, fileext));
+    if fileext == '.gdf'
+        [s, h] = sload(filepath);
+    else if fileext == '.mat'
+        res = load(filepath);
+        s = res.s;
+        h = res.h;
+    else
+        return;
+    end
     
-    % Apply the Laplacian filter. Use the Laplacian mask provided in the moodle.
-    disp(pwd);
+    % Apply the Laplacian filter with the Laplacian mask provided
+    n_channels = h.NS - 1;
     lap_mask = load('resource/laplacian16.mat');
     lap_s = s(:, 1:n_channels) * lap_mask.lap;
     
@@ -31,8 +38,8 @@ function compute_psd(dirpath_in, filename, fileext, dirpath_out)
     EVENT.TYP = h.EVENT.TYP;
     
     % Save the PSDs, the selected frequencies, the events, and all the information you consider relevant into a .mat file with the same name of the processed GDF
-    if ~exist(dirpath_out, 'dir')
-       mkdir(dirpath_out)
+    if ~exist(char(dirpath_out), 'dir')
+       mkdir(char(dirpath_out));
     end
-    save([dirpath_out, filename, '.mat'], 'PSD', 'PSD_params', 'FREQ', 'FREQ_subset', 'FREQ_index', 'EVENT');
+    save(char(strcat(dirpath_out, filename, '.mat')), 'PSD', 'PSD_params', 'FREQ', 'FREQ_subset', 'FREQ_index', 'EVENT', '-v7.3');
 end

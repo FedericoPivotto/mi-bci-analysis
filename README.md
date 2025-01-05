@@ -4,7 +4,7 @@ Analysis of data collected during a 3-day Motor Imagery (MI) Brain-Computer Inte
 ## TODO
 
 ### Analysis
-- [ ] `generation.m` (Federico)
+- [x] `generation.m` (Federico)
 - [ ] `compute_topoplot.m` (Alessandro)
 - [ ] `compute_spectrogram.m` (Riccardo)
 - [ ] `compute_featuremap.m` (Zerby)

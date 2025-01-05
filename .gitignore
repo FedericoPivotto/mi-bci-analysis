@@ -39,5 +39,8 @@ dataset/
 # PSD
 psd/
 
+# GDF concatenations
+gdf/
+
 # Models
 model/
