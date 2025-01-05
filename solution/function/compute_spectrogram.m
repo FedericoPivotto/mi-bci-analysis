@@ -1,6 +1,6 @@
 %% Function to compute and save the spectrogram of the given MAT file
 function compute_spectrogram(dirpath_in, filename, fileext, dirpath_out)
-
+    % Load PSD
     input_file = fullfile(dirpath_in, [filename, fileext]);
     psd_mat = load(input_file);
 
@@ -17,7 +17,6 @@ function compute_spectrogram(dirpath_in, filename, fileext, dirpath_out)
     csf_event.MIN_DUR = min(csf_event.DUR);
     csf_event.MIN_END = csf_event.POS + csf_event.MIN_DUR;
     
-    n_windows = size(psd_mat.PSD, 1);
     n_frequencies = size(psd_mat.PSD, 2);
     n_channels = size(psd_mat.PSD, 3);
     n_trials = sum(psd_mat.EVENT.TYP == 786);
@@ -121,4 +120,5 @@ function compute_spectrogram(dirpath_in, filename, fileext, dirpath_out)
     colormap hot;
     colorbar;
     
+    % TODO: save plot
 end
