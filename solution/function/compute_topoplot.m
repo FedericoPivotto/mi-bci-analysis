@@ -145,105 +145,110 @@ function compute_topoplot(dirpath_in, filename, fileext, dirpath_out)
     
     load('resource/chanlocs16.mat'); % load of the file containing the position of the electrodes
 
+    % Check if dirpath_out exists, if not create it
+    if ~isfolder(dirpath_out)
+        mkdir(dirpath_out);
+    end
+
     % Plot mu ERD/ERS topoplot
 
     if not(any(isnan(ERD_Ref_mu.feet(:)))) % check if the ERD contains NaN values, if not then plot
-        figure
+        h = figure('Visible', 'off');
         topoplot(squeeze(ERD_Ref_mu.feet), chanlocs16, 'maplimits', [-2.4 0.6],  'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Reference Period Both Feet mu band');
-        saveas(gcf,strcat(dirpath_out,"ERD_Reference_both_feet_mu_band.png")); % save of the current plot/figure
-        close(gcf);
+        saveas(h,strcat(dirpath_out, "ERD_Reference_both_feet_mu_band.png"));
+        close(h);
     end
     if not(any(isnan(ERD_Ref_mu.hands(:))))
-        figure
+        h = figure('Visible', 'off');
         topoplot(squeeze(ERD_Ref_mu.hands), chanlocs16, 'maplimits', [-2.4 0.6],  'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Reference Period Both Hands mu band');
-        saveas(gcf,strcat(dirpath_out,"ERD_Reference_both_hands_mu_band.png"));
-        close(gcf);
+        saveas(h,strcat(dirpath_out,"ERD_Reference_both_hands_mu_band.png"));
+        close(h);
     end
     if not(any(isnan(ERD_Ref_mu.rest(:))))
-        figure
+        h = figure('Visible', 'off');
         topoplot(squeeze(ERD_Ref_mu.rest), chanlocs16, 'maplimits', [-2.4 0.6],  'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Reference Period Rest mu band');
-        saveas(gcf,strcat(dirpath_out,"ERD_Reference_rest_mu_band.png"));
-        close(gcf);
+        saveas(h,strcat(dirpath_out,"ERD_Reference_rest_mu_band.png"));
+        close(h);
     end
     if not(any(isnan(ERD_Act_mu.feet(:))))
-        figure
+        h = figure('Visible', 'off');
         topoplot(squeeze(ERD_Act_mu.feet), chanlocs16, 'maplimits', [-2.4 0.6],  'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Activity Period Both Feet mu band');
-        saveas(gcf,strcat(dirpath_out,"ERD_Activity_both_feet_mu_band.png"));
-        close(gcf);
+        saveas(h,strcat(dirpath_out,"ERD_Activity_both_feet_mu_band.png"));
+        close(h);
     end
     if not(any(isnan(ERD_Act_mu.hands(:))))
-        figure
+        h = figure('Visible', 'off');
         topoplot(squeeze(ERD_Act_mu.hands), chanlocs16, 'maplimits', [-2.4 0.6], 'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Activity Period Both Hands mu band');
-        saveas(gcf,strcat(dirpath_out,"ERD_Activity_both_hands_mu_band.png"));
-        close(gcf);
+        saveas(h,strcat(dirpath_out,"ERD_Activity_both_hands_mu_band.png"));
+        close(h);
     end
     if not(any(isnan(ERD_Act_mu.rest(:))))
-        figure
+        h = figure('Visible', 'off');
         topoplot(squeeze(ERD_Act_mu.rest), chanlocs16, 'maplimits', [-2.4 0.6], 'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Activity Period Rest mu band');
-        saveas(gcf,strcat(dirpath_out,"ERD_Activity_rest_mu_band.png"));
-        close(gcf);
+        saveas(h,strcat(dirpath_out,"ERD_Activity_rest_mu_band.png"));
+        close(h);
     end
     
     % Plot beta ERD/ERS topoplot
 
     if not(any(isnan(ERD_Ref_beta.feet(:))))
-        figure
+        h = figure('Visible', 'off');
         topoplot(squeeze(ERD_Ref_beta.feet), chanlocs16, 'maplimits', [-2.4 0.6], 'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Reference Period Both Feet beta band');
-        saveas(gcf,strcat(dirpath_out,"ERD_Reference_both_feet_beta_band.png"));
-        close(gcf);
+        saveas(h,strcat(dirpath_out,"ERD_Reference_both_feet_beta_band.png"));
+        close(h);
     end
     if not(any(isnan(ERD_Ref_beta.hands(:))))
-        figure
+        h = figure('Visible', 'off');
         topoplot(squeeze(ERD_Ref_beta.hands), chanlocs16, 'maplimits', [-2.4 0.6], 'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Reference Period Both Hands beta band');
-        saveas(gcf,strcat(dirpath_out,"ERD_Reference_both_hands_beta_band.png"));
-        close(gcf);
+        saveas(h,strcat(dirpath_out,"ERD_Reference_both_hands_beta_band.png"));
+        close(h);
     end
     if not(any(isnan(ERD_Ref_beta.rest(:))))
-        figure
+        h = figure('Visible', 'off');
         topoplot(squeeze(ERD_Ref_beta.rest), chanlocs16, 'maplimits', [-2.4 0.6], 'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Reference Period Rest beta band');
-        saveas(gcf,strcat(dirpath_out,"ERD_Reference_rest_beta_band.png"));
-        close(gcf);
+        saveas(h,strcat(dirpath_out,"ERD_Reference_rest_beta_band.png"));
+        close(h);
     end
     if not(any(isnan(ERD_Act_beta.feet(:))))
-        figure
+        h = figure('Visible', 'off');
         topoplot(squeeze(ERD_Act_beta.feet), chanlocs16, 'maplimits', [-2.4 0.6], 'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Activity Period Both Feet beta band');
-        saveas(gcf,strcat(dirpath_out,"ERD_Activity_both_feet_beta_band.png"));
-        close(gcf);
+        saveas(h,strcat(dirpath_out,"ERD_Activity_both_feet_beta_band.png"));
+        close(h);
     end
     if not(any(isnan(ERD_Act_beta.hands(:))))
-        figure
+        h = figure('Visible', 'off');
         topoplot(squeeze(ERD_Act_beta.hands), chanlocs16, 'maplimits', [-2.4 0.6], 'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Activity Period Both Hands beta band');
-        saveas(gcf,strcat(dirpath_out,"ERD_Activity_both_hands_beta_band.png"));
-        close(gcf);
+        saveas(h,strcat(dirpath_out,"ERD_Activity_both_hands_beta_band.png"));
+        close(h);
     end
     if not(any(isnan(ERD_Act_beta.rest(:))))
-        figure
+        h = figure('Visible', 'off');
         topoplot(squeeze(ERD_Act_beta.rest), chanlocs16, 'maplimits', [-2.4 0.6], 'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Activity Period Rest beta band');
-        saveas(gcf,strcat(dirpath_out,"ERD_Activity_rest_beta_band.png"));
-        close(gcf);
+        saveas(h,strcat(dirpath_out,"ERD_Activity_rest_beta_band.png"));
+        close(h);
     end
 end

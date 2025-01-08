@@ -1,6 +1,6 @@
 %% Function to compute and save the feature map of the given MAT file
 function compute_featuremap(dirpath_in, filename, fileext, dirpath_out)
-    % INFO: dirpath_in: 'solution/psd/<subject>/', or 'solution/psd/population/'
+    % INFO: dirpath_in: 'solution/psd/micontinuous/<subject>', or 'solution/psd/micontinuous/population/'
     % INFO: filename: '<filename_without_ext>'
     % INFO: fileext: '.mat'
     % INFO: dirpath_out: 'solution/result/micontinuous/featuremap/<subject>/', 'solution/result/micontinuous/featuremap/population/'
@@ -17,7 +17,7 @@ function compute_featuremap(dirpath_in, filename, fileext, dirpath_out)
     % 3. Compute Fisher's score
     fisher_scores = get_fisher_scores(psd_mat.PSD, psd_mat.LABEL.Pk);
     
-    % 5. Visualize the feature map
+    % 4. Visualize the feature map
     n_channels = size(psd_mat.PSD, 3); % Number of channels
     channel_labels = {'Fz', 'FC3', 'FC1', 'FCz', 'FC2', 'FC4', 'C3', 'C1', 'Cz', 'C2', 'C4', 'CP3', 'CP1', 'CPz', 'CP2', 'CP4'};
     clim = [0 1]; % Color limits for visualization
@@ -36,8 +36,13 @@ function compute_featuremap(dirpath_in, filename, fileext, dirpath_out)
         'YTickLabel', keys(channels), ...
         'YTick', values(channels));
 
-    % TODO: save in correct directory, if not exits, create it
-    % Save the plot as an image (PNG format)
+    % 5. Check if dirpath_out exists, if not create it
+    if ~isfolder(dirpath_out)
+        mkdir(dirpath_out);
+    end
+
+    % 6. Save the plot as an image (PNG format)
     image_filename = fullfile(dirpath_out, [filename, '_featuremap.png']);
     saveas(gcf, image_filename); % Save as PNG
+    close(gcf); % Close the figure to free memory
 end

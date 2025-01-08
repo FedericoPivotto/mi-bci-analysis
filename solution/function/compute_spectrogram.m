@@ -120,5 +120,13 @@ function compute_spectrogram(dirpath_in, filename, fileext, dirpath_out)
     colormap hot;
     colorbar;
     
-    % TODO: save plot
+    % Check if dirpath_out exists, if not create it
+    if ~isfolder(dirpath_out)
+        mkdir(dirpath_out);
+    end
+
+    % Save the plot as an image (PNG format)
+    image_filename = fullfile(dirpath_out, [filename, '_spectrogram.png']);
+    saveas(gcf, image_filename); % Save as PNG
+    close(gcf); % Close the figure to free memory
 end
