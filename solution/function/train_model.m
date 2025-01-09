@@ -8,5 +8,101 @@ function train_model(dirpath_in, filename, fileext, dirpath_out)
     % CONVECTION: the model has the name 'model.<filename>.mat'
     % NOTE: there is the need to use the MAT file in resource/ (think how to organize the MAT files with the most relevant features)
 
-    % TODO: see LAB7 (script 2) for the implementation
-end
+    % Load PSD
+    input_file = fullfile(dirpath_in, [filename, fileext]);
+    psd_mat = load(input_file);
+
+    % Extract label vectors using the EVENT field
+    [psd_mat.LABEL.Tk, psd_mat.LABEL.Ck, psd_mat.LABEL.CFbK, ...
+     psd_mat.LABEL.Pk, psd_mat.LABEL.Mk] = get_label_vectors(psd_mat.PSD, psd_mat.EVENT, 'offline');
+    
+    % Compute the Fisher score
+    psd_mat.fisher_scores_matrix = get_fisher_scores(psd_mat.PSD, psd_mat.LABEL.Pk);
+
+    % Visualize the Fisher score map
+    figure(1);
+    clim = [0 1];
+    n_channels = size(psd_mat.PSD, 3);
+    channel_labels = {'Fz', 'FC3', 'FC1', 'FCz', 'FC2', 'FC4', 'C3', 'C1', 'Cz', 'C2', 'C4', 'CP3', 'CP1', 'CPz', 'CP2', 'CP4'};
+    channels = dictionary(channel_labels, 1:n_channels);
+
+    imagesc(psd_mat.FREQ_subset, 1:n_channels, flip(rot90(psd_mat.fisher_scores_matrix(psd_mat.FREQ_index, :), 1), 1), clim);
+    set(gca, 'Title', text('String', 'Feature map (Fisher score)'), ...
+             'XLabel', text('String', 'Frequency [Hz]'), ...
+             'YLabel', text('String', 'Channel'), ...
+             'XTickLabelRotation', 90, ...
+             'XTick', psd_mat.FREQ_subset, ...
+             'YTickLabel', keys(channels), ...
+             'YTick', values(channels));
+    colorbar;
+    % Saving Fisher score
+    fisher_image_filename = fullfile(dirpath_out, [filename, '_fisher.png']);
+    saveas(gcf, fisher_image_filename); 
+    close(gcf);
+
+    % Select the most discriminative features and extract them in a new matrix
+    n_windows = size(psd_mat.PSD, 1);
+    n_frequencies = size(psd_mat.PSD, 2);
+    n_channels = size(psd_mat.PSD, 3);
+    n_features = n_frequencies * n_channels;
+    
+    frequencies = dictionary(psd_mat.FREQ_subset, psd_mat.FREQ_index);
+    
+    % Cz: 22 Hz, 24 Hz, C1: 12 Hz
+    selected_features = [frequencies(22), channels({'Cz'}); frequencies(24), channels({'Cz'}); frequencies(12), channels({'C1'})]; % Pairs frequency-channel
+    FeaturesIdx = sub2ind([n_frequencies, n_channels], selected_features(:, 1), selected_features(:, 2)); % Linear indices for the 3D matrix
+    
+    % Use fitcdiscr() to train a model only with the data
+    psd_mat.PSD_feature = reshape(psd_mat.PSD, n_windows, n_features); % [windows x features]
+    LabelIdx = psd_mat.LABEL.CFbK == 781 & psd_mat.LABEL.Mk == 0; % Offline data during continuous feedback
+    
+    Model = fitcdiscr(psd_mat.PSD_feature(LabelIdx, FeaturesIdx), psd_mat.LABEL.Pk(LabelIdx), 'DiscrimType','quadratic');
+    
+    % Use predict() to evaluate the model with offline data (i.e., training accuracy)
+    [Gk, pp] = predict(Model, psd_mat.PSD_feature(LabelIdx, FeaturesIdx));
+    
+    % The accuracy must be computed for both classes together (i.e., overall accuracy) and for each class separately. Accuracies must be reported as bar plots
+    true_labels = psd_mat.LABEL.Pk(LabelIdx); % Ground truth labels
+    predictions = Gk;
+    
+    % Compute overall accuracy
+    overall_accuracy = mean(predictions == true_labels) * 100;
+    
+    classes = unique(true_labels); % Unique class labels
+    class_accuracies = arrayfun(@(c) mean(Gk(true_labels == c) == c) * 100, classes); % Class-wise accuracy
+
+    disp(['Overall accuracy: ', num2str(overall_accuracy), '%']);
+    for i = 1:length(classes)
+        disp(['Accuracy for class ', num2str(classes(i)), ': ', num2str(class_accuracies(i)), '%']);
+    end
+
+    % Bar plot for accuracies
+    figure(2); 
+    bar_classes = ["Overall", "771 - Both feet", "773 - Both hands"];
+    bar_accuracies = [overall_accuracy; class_accuracies(1) ; class_accuracies(2)];
+    figure;
+    bar(1:length(bar_accuracies), bar_accuracies); % Usa indici numerici per le categorie
+    set(gca, ...
+        'XTick', 1:length(bar_classes), ... % Labels
+        'XTickLabel', bar_classes, ...
+        'XTickLabelRotation', 45, ... 
+        'Title', text('String', 'Single sample accuracy on trainset'), ...
+        'YLabel', text('String', 'Accuracy [%]'), ...
+        'YLim', [0, 100], ...
+        'YGrid', 'on');
+
+    % Save the plot as an image
+    image_filename = fullfile(dirpath_out, ['model.', filename, '_accuracy.png']);
+    saveas(gcf, image_filename); % Save as PNG
+    close(gcf); % Close the figure to free memory
+    
+    % Check if dirpath_out exists, if not create it
+    if ~isfolder(dirpath_out)
+        mkdir(dirpath_out);
+    end
+
+    % Save the model as a .mat file
+    model_filename = fullfile(dirpath_out, ['model.', filename, '.mat']);
+    save(model_filename, 'Model'); % Save the trained model
+
+ end
