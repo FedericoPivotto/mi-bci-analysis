@@ -5,9 +5,9 @@ Analysis of data collected during a 3-day Motor Imagery (MI) Brain-Computer Inte
 
 ### Analysis
 - [x] `generation.m`
-- [x] `compute_topoplot.m` (Zerby, save plot) done!
-- [x] `compute_spectrogram.m` (Zerby, save plot) done!
-- [x] `compute_featuremap.m` (Zerby, save plot) done!
+- [x] `compute_topoplot.m`
+- [x] `compute_spectrogram.m`
+- [x] `compute_featuremap.m`
 - [ ] `analysis.m` (Alessandro)
 
 ### Classification
