@@ -3,23 +3,24 @@ function train_model(dirpath_in, filename, fileext, dirpath_out)
     % INFO: dirpath_in: 'solution/psd/micontinuous/<subject>/', 'solution/psd/micontinuous/population/'
     % INFO: filename: '<filename_without_ext>'
     % INFO: fileext: '.mat'
-    % INFO: dirpath_out: 'solution/model/<subject>/', 'solution/model/population/'
-
+    % INFO: dirpath_out: 'solution/model/micontinuous/<subject>/', 'solution/model/micontinuous/population/'
+    
     % Load PSD
     input_file = fullfile(dirpath_in, [filename, fileext]);
     psd_mat = load(input_file);
 
     % Extract label vectors using the EVENT field
-    [psd_mat.LABEL.Tk, psd_mat.LABEL.Ck, psd_mat.LABEL.CFbK, ...
-     psd_mat.LABEL.Pk, psd_mat.LABEL.Mk] = get_label_vectors(psd_mat.PSD, psd_mat.EVENT, 'offline');
+    [psd_mat.LABEL.Tk, psd_mat.LABEL.Ck, psd_mat.LABEL.CFbK, psd_mat.LABEL.Pk, psd_mat.LABEL.Mk] = get_label_vectors(psd_mat.PSD, psd_mat.EVENT, 'offline');
     
-    % Compute the Fisher score
-    psd_mat.fisher_scores_matrix = get_fisher_scores(psd_mat.PSD, psd_mat.LABEL.Pk);
-
     % Check if dirpath_out exists, if not create it
     if ~isfolder(dirpath_out)
         mkdir(dirpath_out);
     end
+
+    % TODO: replace LOC[22-59] with the manually selected features in the file MAT in 'solution/micontinuous/model/<subject>/', 'solution/micontinuous/model/population/'
+
+    % Compute the Fisher score
+    psd_mat.fisher_scores_matrix = get_fisher_scores(psd_mat.PSD, psd_mat.LABEL.Pk);
 
     % Visualize the Fisher score map
     figure('Visible', 'off');
@@ -57,6 +58,7 @@ function train_model(dirpath_in, filename, fileext, dirpath_out)
     psd_mat.PSD_feature = reshape(psd_mat.PSD, n_windows, n_features); % [windows x features]
     LabelIdx = psd_mat.LABEL.CFbK == 781 & psd_mat.LABEL.Mk == 0; % Offline data during continuous feedback
     
+    % Train model
     Model = fitcdiscr(psd_mat.PSD_feature(LabelIdx, FeaturesIdx), psd_mat.LABEL.Pk(LabelIdx), 'DiscrimType','quadratic');
     
     % Use predict() to evaluate the model with offline data (i.e., training accuracy)
@@ -96,5 +98,5 @@ function train_model(dirpath_in, filename, fileext, dirpath_out)
 
     % Save the trained model as a .mat file
     model_filename = fullfile(dirpath_out, ['model.', filename, '.mat']);
-    save(model_filename, 'Model');
+    save(model_filename, 'Model', 'FeaturesIdx' ,'Gk', 'pp');
  end
