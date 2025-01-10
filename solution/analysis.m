@@ -64,11 +64,14 @@ for i = 1:size(subject, 2)
     end
 
     % Compute spectrograms and feature maps for retrieved psd files
-    for k = 1:size(filename_psd,2)
+    for h = 1:size(filename_psd,2)
+        % Consider concatenated recordings
+        if (~contains(filename_psd(1,h), strcat(subject_id, '.online'))) && (~contains(filename_psd(1,h), strcat(subject_id, '.offline')))
+            continue;
+        end
         compute_spectrogram(dirpath_subject_psd, filename_psd(1,h), '.mat', dirpath_spectrograms_subject);
         compute_featuremap(dirpath_subject_psd, filename_psd(1,h), '.mat', dirpath_featuremaps_subject);
     end
-
 end
 
 % NOTE: for each feature map, qualitatively select and save the most relevant features in a unique .mat file to be saved in solution/resource/
