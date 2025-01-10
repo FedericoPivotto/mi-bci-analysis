@@ -1,8 +1,13 @@
 %% Function to compute and save the spectrogram of the given MAT file
 function compute_spectrogram(dirpath_in, filename, fileext, dirpath_out)
+    % INFO: dirpath_in: 'solution/psd/micontinuous/<subject>/', 'solution/psd/micontinuous/population/'
+    % INFO: filename: '<filename_without_ext>'
+    % INFO: fileext: '.mat'
+    % INFO: dirpath_out: 'solution/result/micontinuous/<subject>/spectrogram/' or 'solution/result/micontinuous/population/spectrogram/'
+
     % Load PSD
-    input_file = fullfile(dirpath_in, [filename, fileext]);
-    psd_mat = load(input_file);
+    filepath = char(strcat(dirpath_in, filename, fileext));
+    psd_mat = load(filepath);
 
     % Create a matrix Activity [windows x frequencies x channels x trials].
     fix_event.POS = psd_mat.EVENT.POS(psd_mat.EVENT.TYP == 786);
@@ -47,12 +52,12 @@ function compute_spectrogram(dirpath_in, filename, fileext, dirpath_out)
     ERD.both_feet = log(activity.both_feet ./ baseline.both_feet);
     ERD.both_hands = log(activity.both_hands ./ baseline.both_hands);
     
-    % g. Select meaningful channels for the motor imagery task
+    % Select meaningful channels for the motor imagery task
     mi_channels = [7, 9, 11]; % C3: 7, Cz: 9, C4: 11
     
-    % h. Visualize the ERD/ERS averaged across trials for the two MI classes (hint: use the function imagesc())
-    figure % Create plot window
-    m = 2; n = 3; % Subplots window size
+    % Visualize the ERD/ERS averaged across trials for the two MI classes (hint: use the function imagesc())
+    figure('Visible', 'off');
+    m = 2; n = 3;
     sgtitle('Average ERD/ERS across Trials');
     clim = [-2.4 0.6];
     
@@ -121,12 +126,11 @@ function compute_spectrogram(dirpath_in, filename, fileext, dirpath_out)
     colorbar;
     
     % Check if dirpath_out exists, if not create it
-    if ~isfolder(dirpath_out)
-        mkdir(dirpath_out);
+    if ~exist(char(dirpath_out), 'dir')
+       mkdir(char(dirpath_out));
     end
 
-    % Save the plot as an image (PNG format)
-    image_filename = fullfile(dirpath_out, [filename, '_spectrogram.png']);
-    saveas(gcf, image_filename); % Save as PNG
-    close(gcf); % Close the figure to free memory
+    % Save the plot as an image
+    image_filename = char(strcat(dirpath_out, 'spectrogram.', filename, '.png'));
+    saveas(gcf, image_filename);
 end

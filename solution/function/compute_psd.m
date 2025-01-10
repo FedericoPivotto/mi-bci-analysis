@@ -2,9 +2,9 @@
 function compute_psd(dirpath_in, filename, fileext, dirpath_out)
     % Load signal and header
     filepath = char(strcat(dirpath_in, filename, fileext));
-    if fileext == '.gdf'
+    if strcmpi(fileext,'.gdf')
         [s, h] = sload(filepath);
-    elseif fileext == '.mat'
+    elseif strcmpi(fileext,'.mat')
         res = load(filepath);
         s = res.s;
         h = res.h;
