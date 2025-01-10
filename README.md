@@ -11,14 +11,14 @@ Analysis of data collected during a 3-day Motor Imagery (MI) Brain-Computer Inte
 - [x] `analysis.m`
 
 ### Classification
-- [ ] `train_model.m` (Riccardo, extract selected features, check bar-plot order)
-- [ ] `evaluate_model.m` (Zerby, check bar-plot order)
-- [x] `training.m`
-- [x] `evaluation.m`
 - [ ] `selection.m` (manually select and save features)
+- [ ] `train_model.m` (Riccardo, extract selected features, check bar-plot order)
+- [x] `training.m`
+- [ ] `evaluate_model.m` (Zerby, check bar-plot order)
+- [x] `evaluation.m`
 
 ### Deadline
-10/01/2025
+??/01/2025
 
 ### Report
 https://www.overleaf.com/9146575821jhxjqvbrdynv#3b2c30
