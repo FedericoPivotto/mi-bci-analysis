@@ -6,8 +6,8 @@ function compute_featuremap(dirpath_in, filename, fileext, dirpath_out)
     % INFO: dirpath_out: 'solution/result/micontinuous/<subject>/featuremap/' or 'solution/result/micontinuous/population/featuremap/'
 
     % Load file .mat
-    filepath_in = fullfile(dirpath_in, [filename, fileext]);
-    psd_mat = load(filepath_in);
+    filepath = char(strcat(dirpath_in, filename, fileext));
+    psd_mat = load(filepath);
     
     % Compute Tk, Ck, CFbK, Pk, Mk
     [psd_mat.LABEL.Tk, psd_mat.LABEL.Ck, psd_mat.LABEL.CFbK, psd_mat.LABEL.Pk, psd_mat.LABEL.Mk] = get_label_vectors(psd_mat.PSD, psd_mat.EVENT, 'offline');
@@ -35,11 +35,11 @@ function compute_featuremap(dirpath_in, filename, fileext, dirpath_out)
         'YTick', values(channels));
 
     % Check if dirpath_out exists, if not create it
-    if ~isfolder(dirpath_out)
-        mkdir(dirpath_out);
+    if ~exist(char(dirpath_out), 'dir')
+       mkdir(char(dirpath_out));
     end
 
     % Save the plot as an image
-    image_filename = fullfile(dirpath_out, ['featuremap.', filename, '.png']);
+    image_filename = char(strcat(dirpath_out, 'featuremap.', filename, '.png'));
     saveas(gcf, image_filename);
 end

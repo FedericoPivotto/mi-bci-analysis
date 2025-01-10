@@ -6,15 +6,21 @@ function train_model(dirpath_in, filename, fileext, dirpath_out)
     % INFO: dirpath_out: 'solution/model/micontinuous/<subject>/', 'solution/model/micontinuous/population/'
     
     % Load PSD
-    input_file = fullfile(dirpath_in, [filename, fileext]);
-    psd_mat = load(input_file);
+    filepath = char(strcat(dirpath_in, filename, fileext));
+    psd_mat = load(filepath);
 
     % Extract label vectors using the EVENT field
     [psd_mat.LABEL.Tk, psd_mat.LABEL.Ck, psd_mat.LABEL.CFbK, psd_mat.LABEL.Pk, psd_mat.LABEL.Mk] = get_label_vectors(psd_mat.PSD, psd_mat.EVENT, 'offline');
     
     % Check if dirpath_out exists, if not create it
-    if ~isfolder(dirpath_out)
-        mkdir(dirpath_out);
+    if ~exist(char(dirpath_out), 'dir')
+       mkdir(char(dirpath_out));
+    end
+
+    % Check if subject directory exists, if not create it
+    dirpath_subject = strcat(dirpath_out, '/', filename, '/');
+    if ~exist(char(dirpath_subject), 'dir')
+       mkdir(char(dirpath_subject));
     end
 
     % TODO: replace LOC[22-59] with the manually selected features in the file MAT in 'solution/micontinuous/model/<subject>/', 'solution/micontinuous/model/population/'
@@ -38,8 +44,8 @@ function train_model(dirpath_in, filename, fileext, dirpath_out)
              'YTickLabel', keys(channels), ...
              'YTick', values(channels));
     colorbar;
-    % Saving Fisher matrix
-    fisher_image_filename = fullfile(dirpath_out, ['fishermatrix.', filename, '.png']);
+    % Saving Fisher score matrix
+    fisher_image_filename = char(strcat(dirpath_subject, 'fishermatrix.', filename, '.png'));
     saveas(gcf, fisher_image_filename);
 
     % Select the most discriminative features and extract them in a new matrix
@@ -93,10 +99,10 @@ function train_model(dirpath_in, filename, fileext, dirpath_out)
         'YLim', [0, 100], ...
         'YGrid', 'on');
     % Save the plot as an image
-    image_filename = fullfile(dirpath_out, ['singlesampleaccuracy.', filename, '.png']);
+    image_filename = char(strcat(dirpath_subject, 'singlesampleaccuracy.', filename, '.png'));
     saveas(gcf, image_filename);
 
     % Save the trained model as a .mat file
-    model_filename = fullfile(dirpath_out, ['model.', filename, '.mat']);
+    model_filename = char(strcat(dirpath_subject, 'model.', filename, '.mat'));
     save(model_filename, 'Model', 'FeaturesIdx' ,'Gk', 'pp');
  end

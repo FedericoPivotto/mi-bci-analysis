@@ -6,8 +6,8 @@ function compute_spectrogram(dirpath_in, filename, fileext, dirpath_out)
     % INFO: dirpath_out: 'solution/result/micontinuous/<subject>/spectrogram/' or 'solution/result/micontinuous/population/spectrogram/'
 
     % Load PSD
-    input_file = fullfile(dirpath_in, [filename, fileext]);
-    psd_mat = load(input_file);
+    filepath = char(strcat(dirpath_in, filename, fileext));
+    psd_mat = load(filepath);
 
     % Create a matrix Activity [windows x frequencies x channels x trials].
     fix_event.POS = psd_mat.EVENT.POS(psd_mat.EVENT.TYP == 786);
@@ -126,11 +126,11 @@ function compute_spectrogram(dirpath_in, filename, fileext, dirpath_out)
     colorbar;
     
     % Check if dirpath_out exists, if not create it
-    if ~isfolder(dirpath_out)
-        mkdir(dirpath_out);
+    if ~exist(char(dirpath_out), 'dir')
+       mkdir(char(dirpath_out));
     end
 
     % Save the plot as an image
-    image_filename = fullfile(dirpath_out, ['spectrogram.', filename, '.png']);
+    image_filename = char(strcat(dirpath_out, 'spectrogram.', filename, '.png'));
     saveas(gcf, image_filename);
 end
