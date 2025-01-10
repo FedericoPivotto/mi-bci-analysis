@@ -1,25 +1,25 @@
 %% Function to compute and save the topoplot of the given GDF file
 function compute_topoplot(dirpath_in, filename, fileext, dirpath_out)
-    % INFO: dirpath_in: 'solution/dataset/micontinuous/<subject>/'
+    % INFO: dirpath_in: 'solution/dataset/micontinuous/<subject>/', 'solution/gdf/micontinuous/<subject>/', 'solution/gdf/micontinuous/population/'
     % INFO: filename: '<filename_without_ext>'
-    % INFO: fileext: '.gdf'
-    % INFO: dirpath_out: 'solution/result/micontinuous/topoplot/<subject>/' or 'solution/result/micontinuous/topoplot/population/'
+    % INFO: fileext: '.gdf', '.mat'
+    % INFO: dirpath_out: 'solution/result/micontinuous/<subject>/topoplot/' or 'solution/result/micontinuous/population/topoplot/'
     
-    file = strcat(dirpath_in,filename,fileext); % path to retrieve the gdf file from
+    % Path to retrieve the GDF file from
+    file = strcat(dirpath_in, filename, fileext);
 
     if strcmpi(fileext,'.gdf') 
         [signal.original,h] = sload(file);
     elseif strcmpi(fileext,'.mat')
-        res = load(file); % load of the gdf file
+        res = load(file);
         signal.original = res.s;
         h = res.h;
     end
-    
 
     num_channels = h.NS-1; % h.NS contains the number of channels, the 17th one is just for control purposes during data acquisition
     fs = h.SampleRate; % SampleRate of the signal
     laplacian_mask = load('resource/laplacian16.mat');
-    signal.laplacian = signal.original(:,1:num_channels) * laplacian_mask.lap; % application of the laplacian mask to the signal
+    signal.laplacian = signal.original(:,1:num_channels) * laplacian_mask.lap; % application of the Laplacian mask to the signal
 
     % Definition of the parameters used for the creation of the filters for the mu and beta band
     filter_order = 4;
@@ -87,8 +87,7 @@ function compute_topoplot(dirpath_in, filename, fileext, dirpath_out)
         trial_starting_pos = trial_starting_pos + min_duration.single_trial;
     end
 
-    % Definition of fixation periods on both mu and beta bands for the
-    % three MI tasks
+    % Definition of fixation periods on both mu and beta bands for the three MI tasks
     mu_fixation_data.feet = trial_matrix.mu(1 : min_duration.fix, : , trial_info_matrix(:,4) == 771);
     mu_fixation_data.hands = trial_matrix.mu(1 : min_duration.fix, : , trial_info_matrix(:,4) == 773);
     mu_fixation_data.rest = trial_matrix.mu(1 : min_duration.fix, : , trial_info_matrix(:,4) == 783); % Might be empty if there are no rest cues 
@@ -97,8 +96,7 @@ function compute_topoplot(dirpath_in, filename, fileext, dirpath_out)
     beta_fixation_data.hands = trial_matrix.beta(1 : min_duration.fix, : , trial_info_matrix(:,4) == 773);
     beta_fixation_data.rest = trial_matrix.beta(1 : min_duration.fix, : , trial_info_matrix(:,4) == 783); % Might be empty if there are no rest cues 
 
-    % Definition of the reference value in the mu and beta bands, it will
-    % be used to determine if a desynchronization or a synchronization has occured
+    % Definition of the reference value in the mu and beta bands, it will be used to determine if a desynchronization or a synchronization has occured
 
     mu_reference.feet = repmat(mean( mu_fixation_data.feet), [size(trial_matrix.mu, 1) 1 1]);
     mu_reference.hands = repmat(mean( mu_fixation_data.hands), [size(trial_matrix.mu, 1) 1 1]);
@@ -108,8 +106,7 @@ function compute_topoplot(dirpath_in, filename, fileext, dirpath_out)
     beta_reference.hands = repmat(mean( beta_fixation_data.hands), [size(trial_matrix.beta, 1) 1 1]);
     beta_reference.rest = repmat(mean( beta_fixation_data.rest), [size(trial_matrix.beta, 1) 1 1]);
     
-    % Computation of ERD in percentage with respect to the zero defined by
-    % the reference period computed above
+    % Computation of ERD in percentage with respect to the zero defined by the reference period computed above
 
     mu_ERD.feet = log(trial_matrix.mu(:,:,trial_info_matrix(:,4) == 771)./mu_reference.feet);
     mu_ERD.hands = log(trial_matrix.mu(:,:,trial_info_matrix(:,4) == 773)./mu_reference.hands);
@@ -119,8 +116,7 @@ function compute_topoplot(dirpath_in, filename, fileext, dirpath_out)
     beta_ERD.hands = log(trial_matrix.beta(:,:,trial_info_matrix(:,4) == 773)./ beta_reference.hands);
     beta_ERD.rest = log(trial_matrix.beta(:,:,trial_info_matrix(:,4) == 783)./ beta_reference.rest);
 
-    % Split of the computed ERD into Reference period (value should be around 0%)
-    % and Activity period with respect to the baseline defined by the reference period
+    % Split of the computed ERD into Reference period (value should be around 0%) and Activity period with respect to the baseline defined by the reference period
 
     FixPeriod(1) = 1; % starting index of every fixation period is the same
     FixPeriod(2) = min_duration.fix; % ending index of every fixation period is the same
@@ -143,7 +139,8 @@ function compute_topoplot(dirpath_in, filename, fileext, dirpath_out)
     ERD_Act_beta.hands = mean(mean(beta_ERD.hands(CFPeriod(1):CFPeriod(2), :, :), 3), 1);
     ERD_Act_beta.rest = mean(mean(beta_ERD.rest(CFPeriod(1):CFPeriod(2), :, :), 3), 1);
     
-    load('resource/chanlocs16.mat'); % load of the file containing the position of the electrodes
+    % Load of the file containing the position of the electrodes
+    load('resource/chanlocs16.mat');
 
     % Check if dirpath_out exists, if not create it
     if ~isfolder(dirpath_out)
@@ -153,102 +150,90 @@ function compute_topoplot(dirpath_in, filename, fileext, dirpath_out)
     % Plot mu ERD/ERS topoplot
 
     if not(any(isnan(ERD_Ref_mu.feet(:)))) % check if the ERD contains NaN values, if not then plot
-        h = figure('Visible', 'off');
+        figure('Visible', 'off');
         topoplot(squeeze(ERD_Ref_mu.feet), chanlocs16, 'maplimits', [-2.4 0.6],  'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Reference Period Both Feet mu band');
-        saveas(h,strcat(dirpath_out, "ERD_Reference_both_feet_mu_band.png"));
-        close(h);
+        saveas(gcf, strcat(dirpath_out, "erd_reference_both_feet_mu_band.png"));
     end
     if not(any(isnan(ERD_Ref_mu.hands(:))))
-        h = figure('Visible', 'off');
+        figure('Visible', 'off');
         topoplot(squeeze(ERD_Ref_mu.hands), chanlocs16, 'maplimits', [-2.4 0.6],  'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Reference Period Both Hands mu band');
-        saveas(h,strcat(dirpath_out,"ERD_Reference_both_hands_mu_band.png"));
-        close(h);
+        saveas(gcf, strcat(dirpath_out,"erd_reference_both_hands_mu_band.png"));
     end
     if not(any(isnan(ERD_Ref_mu.rest(:))))
-        h = figure('Visible', 'off');
+        figure('Visible', 'off');
         topoplot(squeeze(ERD_Ref_mu.rest), chanlocs16, 'maplimits', [-2.4 0.6],  'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Reference Period Rest mu band');
-        saveas(h,strcat(dirpath_out,"ERD_Reference_rest_mu_band.png"));
-        close(h);
+        saveas(gcf, strcat(dirpath_out,"erd_reference_rest_mu_band.png"));
     end
     if not(any(isnan(ERD_Act_mu.feet(:))))
-        h = figure('Visible', 'off');
+        figure('Visible', 'off');
         topoplot(squeeze(ERD_Act_mu.feet), chanlocs16, 'maplimits', [-2.4 0.6],  'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Activity Period Both Feet mu band');
-        saveas(h,strcat(dirpath_out,"ERD_Activity_both_feet_mu_band.png"));
-        close(h);
+        saveas(gcf, strcat(dirpath_out,"erd_activity_both_feet_mu_band.png"));
     end
     if not(any(isnan(ERD_Act_mu.hands(:))))
-        h = figure('Visible', 'off');
+        figure('Visible', 'off');
         topoplot(squeeze(ERD_Act_mu.hands), chanlocs16, 'maplimits', [-2.4 0.6], 'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Activity Period Both Hands mu band');
-        saveas(h,strcat(dirpath_out,"ERD_Activity_both_hands_mu_band.png"));
-        close(h);
+        saveas(gcf, strcat(dirpath_out,"erd_activity_both_hands_mu_band.png"));
     end
     if not(any(isnan(ERD_Act_mu.rest(:))))
-        h = figure('Visible', 'off');
+        figure('Visible', 'off');
         topoplot(squeeze(ERD_Act_mu.rest), chanlocs16, 'maplimits', [-2.4 0.6], 'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Activity Period Rest mu band');
-        saveas(h,strcat(dirpath_out,"ERD_Activity_rest_mu_band.png"));
-        close(h);
+        saveas(gcf, strcat(dirpath_out,"erd_activity_rest_mu_band.png"));
     end
     
     % Plot beta ERD/ERS topoplot
 
     if not(any(isnan(ERD_Ref_beta.feet(:))))
-        h = figure('Visible', 'off');
+        figure('Visible', 'off');
         topoplot(squeeze(ERD_Ref_beta.feet), chanlocs16, 'maplimits', [-2.4 0.6], 'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Reference Period Both Feet beta band');
-        saveas(h,strcat(dirpath_out,"ERD_Reference_both_feet_beta_band.png"));
-        close(h);
+        saveas(gcf, strcat(dirpath_out,"erd_reference_both_feet_beta_band.png"));
     end
     if not(any(isnan(ERD_Ref_beta.hands(:))))
-        h = figure('Visible', 'off');
+        figure('Visible', 'off');
         topoplot(squeeze(ERD_Ref_beta.hands), chanlocs16, 'maplimits', [-2.4 0.6], 'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Reference Period Both Hands beta band');
-        saveas(h,strcat(dirpath_out,"ERD_Reference_both_hands_beta_band.png"));
-        close(h);
+        saveas(gcf, strcat(dirpath_out,"erd_reference_both_hands_beta_band.png"));
     end
     if not(any(isnan(ERD_Ref_beta.rest(:))))
-        h = figure('Visible', 'off');
+        figure('Visible', 'off');
         topoplot(squeeze(ERD_Ref_beta.rest), chanlocs16, 'maplimits', [-2.4 0.6], 'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Reference Period Rest beta band');
-        saveas(h,strcat(dirpath_out,"ERD_Reference_rest_beta_band.png"));
-        close(h);
+        saveas(gcf, strcat(dirpath_out,"erd_reference_rest_beta_band.png"));
     end
     if not(any(isnan(ERD_Act_beta.feet(:))))
-        h = figure('Visible', 'off');
+        figure('Visible', 'off');
         topoplot(squeeze(ERD_Act_beta.feet), chanlocs16, 'maplimits', [-2.4 0.6], 'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Activity Period Both Feet beta band');
-        saveas(h,strcat(dirpath_out,"ERD_Activity_both_feet_beta_band.png"));
-        close(h);
+        saveas(gcf, strcat(dirpath_out,"erd_activity_both_feet_beta_band.png"));
     end
     if not(any(isnan(ERD_Act_beta.hands(:))))
-        h = figure('Visible', 'off');
+        figure('Visible', 'off');
         topoplot(squeeze(ERD_Act_beta.hands), chanlocs16, 'maplimits', [-2.4 0.6], 'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Activity Period Both Hands beta band');
-        saveas(h,strcat(dirpath_out,"ERD_Activity_both_hands_beta_band.png"));
-        close(h);
+        saveas(gcf, strcat(dirpath_out,"erd_activity_both_hands_beta_band.png"));
     end
     if not(any(isnan(ERD_Act_beta.rest(:))))
-        h = figure('Visible', 'off');
+        figure('Visible', 'off');
         topoplot(squeeze(ERD_Act_beta.rest), chanlocs16, 'maplimits', [-2.4 0.6], 'colormap', jet);
         colorbar;
         subtitle('ERD/ERS Activity Period Rest beta band');
-        saveas(h,strcat(dirpath_out,"ERD_Activity_rest_beta_band.png"));
-        close(h);
+        saveas(gcf, strcat(dirpath_out,"erd_activity_rest_beta_band.png"));
     end
 end

@@ -1,12 +1,9 @@
 %% Function to train the model for the given MAT file
 function train_model(dirpath_in, filename, fileext, dirpath_out)
-    % INFO: dirpath_in: 'solution/psd/<subject>/', or 'solution/psd/population/'
+    % INFO: dirpath_in: 'solution/psd/micontinuous/<subject>/', 'solution/psd/micontinuous/population/'
     % INFO: filename: '<filename_without_ext>'
     % INFO: fileext: '.mat'
-    % INFO: dirpath_out: 'solution/model/'
-
-    % CONVECTION: the model has the name 'model.<filename>.mat'
-    % NOTE: there is the need to use the MAT file in resource/ (think how to organize the MAT files with the most relevant features)
+    % INFO: dirpath_out: 'solution/model/<subject>/', 'solution/model/population/'
 
     % Load PSD
     input_file = fullfile(dirpath_in, [filename, fileext]);
@@ -19,8 +16,13 @@ function train_model(dirpath_in, filename, fileext, dirpath_out)
     % Compute the Fisher score
     psd_mat.fisher_scores_matrix = get_fisher_scores(psd_mat.PSD, psd_mat.LABEL.Pk);
 
+    % Check if dirpath_out exists, if not create it
+    if ~isfolder(dirpath_out)
+        mkdir(dirpath_out);
+    end
+
     % Visualize the Fisher score map
-    figure(1);
+    figure('Visible', 'off');
     clim = [0 1];
     n_channels = size(psd_mat.PSD, 3);
     channel_labels = {'Fz', 'FC3', 'FC1', 'FCz', 'FC2', 'FC4', 'C3', 'C1', 'Cz', 'C2', 'C4', 'CP3', 'CP1', 'CPz', 'CP2', 'CP4'};
@@ -35,10 +37,9 @@ function train_model(dirpath_in, filename, fileext, dirpath_out)
              'YTickLabel', keys(channels), ...
              'YTick', values(channels));
     colorbar;
-    % Saving Fisher score
-    fisher_image_filename = fullfile(dirpath_out, [filename, '_fisher.png']);
-    saveas(gcf, fisher_image_filename); 
-    close(gcf);
+    % Saving Fisher matrix
+    fisher_image_filename = fullfile(dirpath_out, ['fishermatrix.', filename, '.png']);
+    saveas(gcf, fisher_image_filename);
 
     % Select the most discriminative features and extract them in a new matrix
     n_windows = size(psd_mat.PSD, 1);
@@ -77,10 +78,9 @@ function train_model(dirpath_in, filename, fileext, dirpath_out)
     end
 
     % Bar plot for accuracies
-    figure(2); 
+    figure('Visible', 'off');
     bar_classes = ["Overall", "771 - Both feet", "773 - Both hands"];
     bar_accuracies = [overall_accuracy; class_accuracies(1) ; class_accuracies(2)];
-    figure;
     bar(1:length(bar_accuracies), bar_accuracies); % Usa indici numerici per le categorie
     set(gca, ...
         'XTick', 1:length(bar_classes), ... % Labels
@@ -90,19 +90,11 @@ function train_model(dirpath_in, filename, fileext, dirpath_out)
         'YLabel', text('String', 'Accuracy [%]'), ...
         'YLim', [0, 100], ...
         'YGrid', 'on');
-
     % Save the plot as an image
-    image_filename = fullfile(dirpath_out, ['model.', filename, '_accuracy.png']);
-    saveas(gcf, image_filename); % Save as PNG
-    close(gcf); % Close the figure to free memory
-    
-    % Check if dirpath_out exists, if not create it
-    if ~isfolder(dirpath_out)
-        mkdir(dirpath_out);
-    end
+    image_filename = fullfile(dirpath_out, ['singlesampleaccuracy.', filename, '.png']);
+    saveas(gcf, image_filename);
 
-    % Save the model as a .mat file
+    % Save the trained model as a .mat file
     model_filename = fullfile(dirpath_out, ['model.', filename, '.mat']);
-    save(model_filename, 'Model'); % Save the trained model
-
+    save(model_filename, 'Model');
  end
