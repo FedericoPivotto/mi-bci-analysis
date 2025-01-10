@@ -74,11 +74,6 @@ function train_model(dirpath_in, filename, fileext, dirpath_out)
     classes = unique(true_labels); % Unique class labels
     class_accuracies = arrayfun(@(c) mean(Gk(true_labels == c) == c) * 100, classes); % Class-wise accuracy
 
-    disp(['Overall accuracy: ', num2str(overall_accuracy), '%']);
-    for i = 1:length(classes)
-        disp(['Accuracy for class ', num2str(classes(i)), ': ', num2str(class_accuracies(i)), '%']);
-    end
-
     % Bar plot for accuracies
     figure('Visible', 'off');
     bar_classes = ["Overall", "771 - Both feet", "773 - Both hands"];
