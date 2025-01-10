@@ -44,3 +44,6 @@ gdf/
 
 # Models
 model/
+
+# Result
+result/
