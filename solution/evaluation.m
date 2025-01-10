@@ -38,9 +38,9 @@ for i = 1:size(subject, 2)
     subject_id = strrep(subject(i), strcat('_', dataset), '');
 
     % Directory in which read the trained model
-    dirpath_model = strcat(dirpath_model, subject(i), '/');
+    dirpath_model_subject = strcat(dirpath_model, subject(i), '/');
     % Consider trained model on offline recordings
-    path_model = strcat(dirpath_model, 'model.', subject_id, '.offline.mi.mi_bhbf', fileext.mat);
+    path_model = strcat(dirpath_model_subject, 'model.', subject_id, '.offline.mi.mi_bhbf', fileext.mat);
     
     % Directory in which read the PSD
     dirpath_psd_subject = strcat(dirpath_psd, subject(i), '/');
@@ -56,6 +56,6 @@ for i = 1:size(subject, 2)
         if ~contains(filename(j), strcat(subject_id, '.online'))
             continue;
         end
-        evaluate_model(path_model, dirpath_subject, filename(j), fileext.mat, dirpath_model);
+        evaluate_model(path_model, dirpath_subject, filename(j), fileext.mat, dirpath_model_subject);
     end
 end

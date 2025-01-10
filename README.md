@@ -11,10 +11,10 @@ Analysis of data collected during a 3-day Motor Imagery (MI) Brain-Computer Inte
 - [ ] `analysis.m` (Alessandro)
 
 ### Classification
-- [ ] `train_model.m` (Riccardo)
-- [ ] `evaluate_model.m` (Zerby)
-- [ ] `training.m` (Federico)
-- [ ] `evaluation.m`(Federico)
+- [ ] `train_model.m` (Riccardo, extract selected features, check bar-plot order)
+- [ ] `evaluate_model.m` (Zerby, check bar-plot order)
+- [x] `training.m`
+- [x] `evaluation.m`
 - [ ] `selection.m`
 
 ### Deadline

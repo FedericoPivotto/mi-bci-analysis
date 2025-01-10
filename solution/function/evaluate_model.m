@@ -10,20 +10,17 @@ function evaluate_model(path_model, dirpath_in, filename, fileext, dirpath_out)
     % REMEMBER: compute required metrics
     % NOTE: obviously, the plots need to be saved
 
-
     % Load the trained model
-    model_data = load(path_model);
-    model = model_data.Model; % Trained model
-    features_idx = model_data.FeaturesIdx; % Selected feature indices
-
-    % Build the full path to the input MAT file
-    mat_filepath = fullfile(dirpath_in, [filename, fileext]);
-    if ~isfile(mat_filepath)
-        error('MAT file not found: %s', mat_filepath);
-    end
+    model_data = load(char(path_model));
+    Model = model_data.Model; % Trained model
+    FeaturesIdx = model_data.FeaturesIdx; % Selected feature indices
 
     % Load the MAT file containing the PSD data
-    psd_data = load(mat_filepath);
+    filepath = char(strcat(dirpath_in, filename, fileext));
+    psd_data = load(filepath);
+
+    % Extract label vectors using the EVENT field
+    [psd_data.LABEL.Tk, psd_data.LABEL.Ck, psd_data.LABEL.CFbK, psd_data.LABEL.Pk, psd_data.LABEL.Mk] = get_label_vectors(psd_data.PSD, psd_data.EVENT, 'online');
 
     % Pre-process the PSD data
     n_windows = size(psd_data.PSD, 1); 
@@ -35,13 +32,13 @@ function evaluate_model(path_model, dirpath_in, filename, fileext, dirpath_out)
     psd_features = reshape(psd_data.PSD, n_windows, n_features);
 
     % Filter the data for relevant windows (TYP = 771 and TYP = 781)
-    label_idx = psd_data.LABEL.CFbK == 781 & psd_data.LABEL.Mk == 1;
+    LabelIdx = psd_data.LABEL.CFbK == 781 & psd_data.LABEL.Mk == 1;
 
     % Predict labels using the trained model
-    [Gk, pp] = predict(model, psd_features(label_idx, features_idx));
+    [Gk, pp] = predict(Model, psd_features(LabelIdx, FeaturesIdx));
 
     % Compute evaluation metrics
-    true_labels = psd_data.LABEL.Pk(label_idx); % Ground truth labels
+    true_labels = psd_data.LABEL.Pk(LabelIdx); % Ground truth labels
     overall_accuracy = mean(Gk == true_labels) * 100; % Overall accuracy
 
     % Compute accuracy for each class
@@ -50,30 +47,24 @@ function evaluate_model(path_model, dirpath_in, filename, fileext, dirpath_out)
     for i = 1:length(classes)
         class_accuracies(i) = mean(Gk(true_labels == classes(i)) == classes(i)) * 100;
     end
+    
+    % Check if dirpath_out exists, if not create it
+    if ~exist(char(dirpath_out), 'dir')
+       mkdir(char(dirpath_out));
+    end
 
-    % Visualize the results
-    figure;
-    bar_classes = ["Overall", arrayfun(@(x) sprintf('Class %d', x), classes, 'UniformOutput', false)];
-    bar_accuracies = [overall_accuracy; class_accuracies];
-    bar(categorical(bar_classes), bar_accuracies);
-    title('Accuracy Evaluation');
-    ylabel('Accuracy [%]');
-    ylim([0, 100]);
-    grid on;
+    % Bar plot for accuracies
+    figure('Visible', 'off');
+    bar_classes = ["Overall", "771 - Both feet", "773 - Both hands"];
+    bar_accuracies = [overall_accuracy; class_accuracies(1); class_accuracies(2)];
+    bar(bar_classes, bar_accuracies);
+    set(gca, ...
+        'Title', text('String', 'Single sample accuracy on testset'), ...
+        'YLabel', text('String', 'Accuracy [%]'), ...
+        'YLim', [0, 100], ...
+        'YGrid', 'on');
 
     % Save the accuracy plot
-    output_dir = fullfile(dirpath_out, 'accuracy_plots');
-    if ~isfolder(output_dir)
-        mkdir(output_dir);
-    end
-    saveas(gcf, fullfile(output_dir, [filename, '_accuracy_plot.png']));
-
-    % Save the metrics to a log file
-    metrics_filepath = fullfile(output_dir, [filename, '_metrics.txt']);
-    fid = fopen(metrics_filepath, 'w');
-    fprintf(fid, 'Overall Accuracy: %.2f%%\n', overall_accuracy);
-    for i = 1:length(classes)
-        fprintf(fid, 'Accuracy for Class %d: %.2f%%\n', classes(i), class_accuracies(i));
-    end
-    fclose(fid);
+    image_filename = char(strcat(dirpath_out, 'trialbasedaccuracy.', filename, '.png'));
+    saveas(gcf, image_filename);
 end
