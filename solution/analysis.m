@@ -55,7 +55,12 @@ for i = 1:size(subject, 2)
 
     % Compute topoplots for retrieved gdf files
     for h = 1:size(filename_gdf,2)
-        compute_topoplot(dirpath_subject_gdf, filename_gdf(1,h), '.mat', dirpath_topoplots_subject);
+        if contains(filename_gdf(1,h), 'online')
+            dirpath_topoplots_subject_type = strcat(dirpath_topoplots_subject, 'online/');
+        elseif contains(filename_gdf(1,h), 'offline')
+            dirpath_topoplots_subject_type = strcat(dirpath_topoplots_subject, 'offline/');
+        end
+        compute_topoplot(dirpath_subject_gdf, filename_gdf(1,h), '.mat', dirpath_topoplots_subject_type);
     end
 
     % Compute spectrograms and feature maps for retrieved psd files
