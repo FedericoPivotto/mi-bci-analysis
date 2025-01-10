@@ -17,12 +17,6 @@ function train_model(dirpath_in, filename, fileext, dirpath_out)
        mkdir(char(dirpath_out));
     end
 
-    % Check if subject directory exists, if not create it
-    dirpath_subject = strcat(dirpath_out, '/', filename, '/');
-    if ~exist(char(dirpath_subject), 'dir')
-       mkdir(char(dirpath_subject));
-    end
-
     % TODO: replace LOC[22-59] with the manually selected features in the file MAT in 'solution/micontinuous/model/<subject>/', 'solution/micontinuous/model/population/'
 
     % Compute the Fisher score
@@ -45,7 +39,7 @@ function train_model(dirpath_in, filename, fileext, dirpath_out)
              'YTick', values(channels));
     colorbar;
     % Saving Fisher score matrix
-    fisher_image_filename = char(strcat(dirpath_subject, 'fishermatrix.', filename, '.png'));
+    fisher_image_filename = char(strcat(dirpath_out, 'fishermatrix.', filename, '.png'));
     saveas(gcf, fisher_image_filename);
 
     % Select the most discriminative features and extract them in a new matrix
@@ -99,10 +93,10 @@ function train_model(dirpath_in, filename, fileext, dirpath_out)
         'YLim', [0, 100], ...
         'YGrid', 'on');
     % Save the plot as an image
-    image_filename = char(strcat(dirpath_subject, 'singlesampleaccuracy.', filename, '.png'));
+    image_filename = char(strcat(dirpath_out, 'singlesampleaccuracy.', filename, '.png'));
     saveas(gcf, image_filename);
 
     % Save the trained model as a .mat file
-    model_filename = char(strcat(dirpath_subject, 'model.', filename, '.mat'));
+    model_filename = char(strcat(dirpath_out, 'model.', filename, '.mat'));
     save(model_filename, 'Model', 'FeaturesIdx' ,'Gk', 'pp');
  end

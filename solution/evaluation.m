@@ -13,9 +13,10 @@ addpath('function/');
 
 %% Evaluate subjects and population trained classification models
 
-% Dataset
+% Trained models
 dataset = 'micontinuous';
-dirpath_dataset = ['../dataset/', dataset, '/'];
+dirpath_model = ['model/', dataset, '/'];
+dirpath_psd = ['psd/', dataset, '/'];
 fileext = struct('gdf', '.gdf', 'mat', '.mat');
 
 % Subjects
@@ -30,3 +31,31 @@ subject = {
     'aj9_micontinuous', ...
     'population'
 };
+
+% Scan each subject
+for i = 1:size(subject, 2)
+    % Get subject ID
+    subject_id = strrep(subject(i), strcat('_', dataset), '');
+
+    % Directory in which read the trained model
+    dirpath_model = strcat(dirpath_model, subject(i), '/');
+    % Consider trained model on offline recordings
+    path_model = strcat(dirpath_model, 'model.', subject_id, '.offline.mi.mi_bhbf', fileext.mat);
+    
+    % Directory in which read the PSD
+    dirpath_psd_subject = strcat(dirpath_psd, subject(i), '/');
+
+    % Get MAT files in subject directory
+    dirpath_subject = cell2mat(dirpath_psd_subject);
+    files = dir(fullfile(dirpath_subject, ['*', fileext.mat]));
+    filename = strrep({files.name}, fileext.mat, '');
+
+    % Train and save model in MAT file
+    for j = 1:size(filename, 2)
+        % Consider online recordings
+        if ~contains(filename(j), strcat(subject_id, '.online'))
+            continue;
+        end
+        evaluate_model(path_model, dirpath_subject, filename(j), fileext.mat, dirpath_model);
+    end
+end
