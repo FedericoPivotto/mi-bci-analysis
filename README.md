@@ -15,12 +15,10 @@ Analysis of data collected during a 3-day Motor Imagery (MI) Brain-Computer Inte
 - [ ] `evaluate_model.m` (Zerby)
 - [ ] `training.m` (Federico)
 - [ ] `evaluation.m`(Federico)
+- [ ] `selection.m`
 
 ### Deadline
 10/01/2025
-
-### Questions
-- Grand average analysis on the concatenation of the concatenations? Maybe only about the offline recordings.
 
 ### Report
 https://www.overleaf.com/9146575821jhxjqvbrdynv#3b2c30
@@ -57,8 +55,9 @@ https://cloud.dei.unipd.it/index.php/s/DLJfJccgFnFiDZY
 2. Create `toolbox/` folder and insert `biosig` and `eeglab` toolboxes.
 3. Run `generation.m` script.
 4. Run `analysis.m` script.
-5. Run `training.m` script.
-6. Run `evaluation.m` script.
+5. Run `selection.m` script.
+6. Run `training.m` script.
+7. Run `evaluation.m` script.
 
 ## Authors
 - Federico Pivotto, 2121720, federico.pivotto@studenti.unipd.it
@@ -67,9 +66,9 @@ https://cloud.dei.unipd.it/index.php/s/DLJfJccgFnFiDZY
 - Riccardo Zerbinati, 2158676, riccardo.zerbinati@studenti.unipd.it
 
 ### Contribution
-| Member             | Work                                     |
-| ------------------ | ---------------------------------------- |
-| Federico Pivotto   | Generation, training-evaluation workflow |
-| Alessandro Bozzon  | Topoplot, analysis workflow              |
-| Riccardo Simion    | Spectrogram, model training              |
-| Riccardo Zerbinati | Feature map, model evaluation            |
+| Member             | Work                                                    |
+| ------------------ | ------------------------------------------------------- |
+| Federico Pivotto   | Data generation, training workflow, evaluation workflow |
+| Alessandro Bozzon  | Topoplot computation, analysis workflow                 |
+| Riccardo Simion    | Spectrogram computation, model training                 |
+| Riccardo Zerbinati | Feature map computation, model evaluation               |
