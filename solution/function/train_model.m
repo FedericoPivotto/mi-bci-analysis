@@ -39,7 +39,7 @@ function train_model(dirpath_in, filename, fileext, dirpath_out)
              'YTick', values(channels));
     colorbar;
     % Saving Fisher score matrix
-    fisher_image_filename = char(strcat(dirpath_out, 'fishermatrix.', filename, '.png'));
+    fisher_image_filename = char(strcat(dirpath_out, 'fisherscorematrix.', filename, '.png'));
     saveas(gcf, fisher_image_filename);
 
     % Select the most discriminative features and extract them in a new matrix

@@ -4,9 +4,8 @@ clc; close all; clear;
 %% Function path
 addpath('function/');
 
-%% For all the GDF and MAT files, it uses the functions compute_topoplot, compute_spectrogram and compute_featuremap.
+%% Computes topoplots, spectrograms and feature maps for the GDF and MAT data files
 
-% TODO
 % Trained models
 dataset = 'micontinuous';
 dirpath_psd = ['psd/', dataset, '/'];
@@ -73,5 +72,3 @@ for i = 1:size(subject, 2)
         compute_featuremap(dirpath_subject_psd, filename_psd(1,h), '.mat', dirpath_featuremaps_subject);
     end
 end
-
-% NOTE: for each feature map, qualitatively select and save the most relevant features in a unique .mat file to be saved in solution/resource/
