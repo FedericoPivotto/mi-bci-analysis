@@ -31,15 +31,31 @@ function compute_spectrogram(dirpath_in, filename, fileext, dirpath_out)
 
     % Each trial ranges from the event related to the fixation cross (TYP=786) to the end of the event related to the continuous feedback (TYP=781)
     % Create a matrix Reference [windows x frequencies x channels x trials] related only to the fixation period
-    for i_trial = 1 : n_trials
-        psd_trial.TYP(i_trial) = psd_mat.EVENT.TYP((i_trial * 4) - 1);
     
-        psd_trial.activity(1:size(fix_event.POS(i_trial):csf_event.MIN_END(i_trial), 2), :, :, i_trial) = psd_mat.PSD(fix_event.POS(i_trial):csf_event.MIN_END(i_trial), 1:n_frequencies, 1:n_channels);
-        psd_trial.reference(1:size(fix_event.POS(i_trial):fix_event.MIN_END(i_trial), 2), :, :, i_trial) = psd_mat.PSD(fix_event.POS(i_trial):fix_event.MIN_END(i_trial), 1:n_frequencies, 1:n_channels);
-    
-        activity.both(1:size(psd_trial.activity, 1), 1:n_frequencies, 1:n_channels, i_trial) = psd_trial.activity(:, :, :, i_trial);
-        reference.both(1:size(psd_trial.reference, 1), 1:n_frequencies, 1:n_channels, i_trial) = psd_trial.reference(:, :, :, i_trial);
+    % Split processing in offline and online
+
+    if contains(filename,'offline') 
+        for i_trial = 1 : n_trials
+            psd_trial.TYP(i_trial) = psd_mat.EVENT.TYP((i_trial * 4) - 1);
+        
+            psd_trial.activity(1:size(fix_event.POS(i_trial):csf_event.MIN_END(i_trial), 2), :, :, i_trial) = psd_mat.PSD(fix_event.POS(i_trial):csf_event.MIN_END(i_trial), 1:n_frequencies, 1:n_channels);
+            psd_trial.reference(1:size(fix_event.POS(i_trial):fix_event.MIN_END(i_trial), 2), :, :, i_trial) = psd_mat.PSD(fix_event.POS(i_trial):fix_event.MIN_END(i_trial), 1:n_frequencies, 1:n_channels);
+        
+            activity.both(1:size(psd_trial.activity, 1), 1:n_frequencies, 1:n_channels, i_trial) = psd_trial.activity(:, :, :, i_trial);
+            reference.both(1:size(psd_trial.reference, 1), 1:n_frequencies, 1:n_channels, i_trial) = psd_trial.reference(:, :, :, i_trial);
+        end 
+    else
+        for i_trial = 1 : n_trials
+            psd_trial.TYP(i_trial) = psd_mat.EVENT.TYP((i_trial * 4) - 2);
+        
+            psd_trial.activity(1:size(fix_event.POS(i_trial):csf_event.MIN_END(i_trial), 2), :, :, i_trial) = psd_mat.PSD(fix_event.POS(i_trial):csf_event.MIN_END(i_trial), 1:n_frequencies, 1:n_channels);
+            psd_trial.reference(1:size(fix_event.POS(i_trial):fix_event.MIN_END(i_trial), 2), :, :, i_trial) = psd_mat.PSD(fix_event.POS(i_trial):fix_event.MIN_END(i_trial), 1:n_frequencies, 1:n_channels);
+        
+            activity.both(1:size(psd_trial.activity, 1), 1:n_frequencies, 1:n_channels, i_trial) = psd_trial.activity(:, :, :, i_trial);
+            reference.both(1:size(psd_trial.reference, 1), 1:n_frequencies, 1:n_channels, i_trial) = psd_trial.reference(:, :, :, i_trial);
+        end
     end
+    
     
     activity.both_feet = activity.both(:, :, :, psd_trial.TYP == 771);
     activity.both_hands = activity.both(:, :, :, psd_trial.TYP == 773);
