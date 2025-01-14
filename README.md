@@ -8,7 +8,7 @@ Analysis of data collected during a 3-day Motor Imagery (MI) Brain-Computer Inte
 - [x] `compute_topoplot.m`
 - [x] `compute_spectrogram.m`
 - [x] `compute_featuremap.m`
-- [x] `analysis.m`
+- [x] `analysis.m` (fix spectrogram, feature map in MacOS and Linux)
 
 ### Classification
 - [ ] `selection.m` (manually select and save features)
@@ -66,9 +66,9 @@ https://cloud.dei.unipd.it/index.php/s/DLJfJccgFnFiDZY
 - Riccardo Zerbinati, 2158676, riccardo.zerbinati@studenti.unipd.it
 
 ### Contribution
-| Member             | Work                                                    |
-| ------------------ | ------------------------------------------------------- |
-| Federico Pivotto   | Data generation, training workflow, evaluation workflow |
-| Alessandro Bozzon  | Topoplot computation, analysis workflow                 |
-| Riccardo Simion    | Spectrogram computation, model training                 |
-| Riccardo Zerbinati | Feature map computation, model evaluation               |
+| Member             | Work                                                                       |
+| ------------------ | -------------------------------------------------------------------------- |
+| Federico Pivotto   | Data generation, training workflow, evaluation workflow, feature selection |
+| Alessandro Bozzon  | Topoplot computation, analysis workflow, feature selection                 |
+| Riccardo Simion    | Spectrogram computation, model training, feature selection                 |
+| Riccardo Zerbinati | Feature map computation, model evaluation,feature selection                |

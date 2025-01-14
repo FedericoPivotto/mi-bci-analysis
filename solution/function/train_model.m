@@ -78,7 +78,7 @@ function train_model(dirpath_in, filename, fileext, dirpath_out)
     figure('Visible', 'off');
     bar_classes = ["Overall", "771 - Both feet", "773 - Both hands"];
     bar_accuracies = [overall_accuracy; class_accuracies(1) ; class_accuracies(2)];
-    bar(1:length(bar_accuracies), bar_accuracies); % Usa indici numerici per le categorie
+    bar(1:length(bar_accuracies), bar_accuracies);
     set(gca, ...
         'XTick', 1:length(bar_classes), ... % Labels
         'XTickLabel', bar_classes, ...
