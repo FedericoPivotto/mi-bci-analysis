@@ -6,8 +6,6 @@ addpath('function/');
 
 %% Select the most discriminative features for each subject and save them.
 
-% Features manually selected for each subject and population according to their feature maps
-
 % Subject ai6
 % Cz: 18, 20, 22
 ai6.channel = {'Cz', 'Cz', 'Cz'};
