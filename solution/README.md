@@ -57,11 +57,13 @@ selected_features = [frequencies(12), channels({'C1'}); frequencies(12), channel
 ```
 
 ## Overall from subjects
+```matlab
 % Cz: 18+, 20+, 22+, 24+
 % C1: 12++, 14+
 % C2: 12+
 % C3: 10+, 12+++, 14++++
 % C4: 10+, 12+++, 14+++
+```
 
 ## Population
 ```matlab
