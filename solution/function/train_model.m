@@ -17,41 +17,23 @@ function train_model(dirpath_in, filename, fileext, dirpath_out)
        mkdir(char(dirpath_out));
     end
 
-    % TODO: replace LOC[22-59] with the manually selected features in the file MAT in 'solution/micontinuous/model/<subject>/', 'solution/micontinuous/model/population/'
-
-    % Compute the Fisher score
-    psd_mat.fisher_scores_matrix = get_fisher_scores(psd_mat.PSD, psd_mat.LABEL.Pk);
-
-    % Visualize the Fisher score map
-    figure('Visible', 'off');
-    clim = [0 1];
+    % Features attributes
     n_channels = size(psd_mat.PSD, 3);
     channel_labels = {'Fz', 'FC3', 'FC1', 'FCz', 'FC2', 'FC4', 'C3', 'C1', 'Cz', 'C2', 'C4', 'CP3', 'CP1', 'CPz', 'CP2', 'CP4'};
     channels = dictionary(channel_labels, 1:n_channels);
+    frequencies = dictionary(psd_mat.FREQ_subset, psd_mat.FREQ_index);
 
-    imagesc(psd_mat.FREQ_subset, 1:n_channels, flip(rot90(psd_mat.fisher_scores_matrix(psd_mat.FREQ_index, :), 1), 1), clim);
-    set(gca, 'Title', text('String', 'Feature map (Fisher score)'), ...
-             'XLabel', text('String', 'Frequency [Hz]'), ...
-             'YLabel', text('String', 'Channel'), ...
-             'XTickLabelRotation', 90, ...
-             'XTick', psd_mat.FREQ_subset, ...
-             'YTickLabel', keys(channels), ...
-             'YTick', values(channels));
-    colorbar;
-    % Saving Fisher score matrix
-    fisher_image_filename = char(strcat(dirpath_out, 'fisherscorematrix.', filename, '.png'));
-    saveas(gcf, fisher_image_filename);
-
-    % Select the most discriminative features and extract them in a new matrix
+    % Dimensions
     n_windows = size(psd_mat.PSD, 1);
     n_frequencies = size(psd_mat.PSD, 2);
     n_channels = size(psd_mat.PSD, 3);
-    n_features = n_frequencies * n_channels;
+    n_features = n_frequencies * n_channels;  
     
-    frequencies = dictionary(psd_mat.FREQ_subset, psd_mat.FREQ_index);
-    
-    % Cz: 22 Hz, 24 Hz, C1: 12 Hz
+    % TODO: read selected features from 'solution/resource/features.mat' and save them in selected_features with the following format
+    % Select the most discriminative features
     selected_features = [frequencies(22), channels({'Cz'}); frequencies(24), channels({'Cz'}); frequencies(12), channels({'C1'})]; % Pairs frequency-channel
+    
+    % Extract features from matrix
     FeaturesIdx = sub2ind([n_frequencies, n_channels], selected_features(:, 1), selected_features(:, 2)); % Linear indices for the 3D matrix
     
     % Use fitcdiscr() to train a model only with the data
