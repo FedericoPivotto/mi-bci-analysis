@@ -1,13 +1,5 @@
 # Feature selection
 
-## Format example
-```matlab
-% Cz: 22 Hz, 24 Hz, C1: 12 Hz
-selected_features = [frequencies(22), channels({'Cz'}); frequencies(24), channels({'Cz'}); frequencies(12), channels({'C1'})];
-```
-frequencies(XX), channels({'CX'}); 
-CX: XX, 
-
 ## Subject AI6
 ```matlab
 % Cz: 18+++, 20+++, 22++
@@ -61,13 +53,19 @@ selected_features = [frequencies(12), channels({'C4'})];
 ```matlab
 % C1: 12++
 % C2: 12++
-selected_features = [];
+selected_features = [frequencies(12), channels({'C1'}); frequencies(12), channels({'C2'})];
 ```
+
+## Overall from subjects
+% Cz: 18+, 20+, 22+, 24+
+% C1: 12++, 14+
+% C2: 12+
+% C3: 10+, 12+++, 14++++
+% C4: 10+, 12+++, 14+++
 
 ## Population
 ```matlab
-% Cz: 
-% C3: 
-% C4: 
-selected_features = [];
+% C3: 12, 14
+% C4: 12, 14
+selected_features = [frequencies(12), channels({'C3'}); frequencies(14), channels({'C3'}); frequencies(12), channels({'C4'}); frequencies(14), channels({'C4'})];
 ```
