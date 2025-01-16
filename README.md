@@ -14,7 +14,7 @@ Analysis of data collected during a 3-day Motor Imagery (MI) Brain-Computer Inte
 - [x] `selection.m`
 - [ ] `train_model.m`: check bar-plot order
 - [x] `training.m`
-- [ ] `evaluate_model.m`: add time and other metrics, check bar-plot order
+- [ ] `evaluate_model.m`: check bar-plot order
 - [x] `evaluation.m`
 
 ### Report
