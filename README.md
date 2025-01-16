@@ -71,6 +71,6 @@ https://cloud.dei.unipd.it/index.php/s/DLJfJccgFnFiDZY
 | Member             | Work                                                                                           |
 | ------------------ | ---------------------------------------------------------------------------------------------- |
 | Federico Pivotto   | Data generation, training workflow, evaluation workflow, feature selection, selection workflow |
-| Alessandro Bozzon  | Topoplot computation, analysis workflow, feature selection                                     |
+| Alessandro Bozzon  | Topoplot computation, analysis workflow, feature selection, metrics                            |
 | Riccardo Simion    | Spectrogram computation, model training, feature selection                                     |
 | Riccardo Zerbinati | Feature map computation, model evaluation, feature selection                                   |
