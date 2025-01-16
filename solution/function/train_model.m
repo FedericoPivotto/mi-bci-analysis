@@ -1,5 +1,5 @@
 %% Function to train the model for the given MAT file
-function train_model(dirpath_in, filename, fileext, dirpath_out)
+function train_model(dirpath_in, filename, fileext, dirpath_out, dirpath_res)
     % INFO: dirpath_in: 'solution/psd/micontinuous/<subject>/', 'solution/psd/micontinuous/population/'
     % INFO: filename: '<filename_without_ext>'
     % INFO: fileext: '.mat'
@@ -29,9 +29,16 @@ function train_model(dirpath_in, filename, fileext, dirpath_out)
     n_channels = size(psd_mat.PSD, 3);
     n_features = n_frequencies * n_channels;  
     
-    % TODO: read selected features from 'solution/resource/features.mat' and save them in selected_features with the following format
+    % Get subject ID
+    subject_id = char(extractBefore(filename, '.'));
     % Select the most discriminative features
-    selected_features = [frequencies(22), channels({'Cz'}); frequencies(24), channels({'Cz'}); frequencies(12), channels({'C1'})]; % Pairs frequency-channel
+    features = load(char(strcat(dirpath_res, '/features.mat')));
+    channel = features.(subject_id).channel;
+    frequency = features.(subject_id).frequency;
+    selected_features = [];
+    for i = 1:size(channel, 2)
+        selected_features = [selected_features; frequencies(cell2mat(frequency(i))), channels(channel(i))];
+    end
     
     % Extract features from matrix
     FeaturesIdx = sub2ind([n_frequencies, n_channels], selected_features(:, 1), selected_features(:, 2)); % Linear indices for the 3D matrix

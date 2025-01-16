@@ -34,7 +34,7 @@ for i = 1:size(subject, 2)
     % Directory in which save the model
     dirpath_model = strcat('model/', dataset, '/', subject(i), '/');
     % Directory of resource
-    dirpath_res = strcat('resource/');
+    dirpath_res = 'resource/';
 
     % Get MAT files in subject directory
     dirpath_subject = cell2mat(dirpath_psd_subject);
