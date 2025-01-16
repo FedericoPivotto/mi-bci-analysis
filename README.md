@@ -8,7 +8,7 @@ Analysis of data collected during a 3-day Motor Imagery (MI) Brain-Computer Inte
 - [x] `compute_topoplot.m`
 - [x] `compute_spectrogram.m`
 - [x] `compute_featuremap.m`
-- [ ] `analysis.m` (fix spectrogram and feature map in MacOS and Linux)
+- [x] `analysis.m`
 
 ### Classification
 - [x] `selection.m`
