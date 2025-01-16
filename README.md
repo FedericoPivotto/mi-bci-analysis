@@ -17,12 +17,13 @@ Analysis of data collected during a 3-day Motor Imagery (MI) Brain-Computer Inte
 - [ ] `evaluate_model.m`: add time and other metrics, check bar-plot order
 - [x] `evaluation.m`
 
-### Deadline
-??/01/2025
-
 ### Report
 - [ ] Report
+
 https://www.overleaf.com/9146575821jhxjqvbrdynv#3b2c30
+
+### Deadline
+??/01/2025
 
 ## MATLAB Toolbox
 
