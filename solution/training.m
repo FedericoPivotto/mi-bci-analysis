@@ -33,6 +33,8 @@ for i = 1:size(subject, 2)
     dirpath_psd_subject = strcat(dirpath_psd, subject(i), '/');
     % Directory in which save the model
     dirpath_model = strcat('model/', dataset, '/', subject(i), '/');
+    % Directory of resource
+    dirpath_res = strcat('resource/');
 
     % Get MAT files in subject directory
     dirpath_subject = cell2mat(dirpath_psd_subject);
@@ -45,6 +47,6 @@ for i = 1:size(subject, 2)
         if ~contains(filename(j), strcat(subject_id, '.offline'))
             continue;
         end
-        train_model(dirpath_subject, filename(j), fileext.mat, dirpath_model);
+        train_model(dirpath_subject, filename(j), fileext.mat, dirpath_model, dirpath_res);
     end
 end
