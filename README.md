@@ -21,7 +21,8 @@ Analysis of data collected during a 3-day Motor Imagery (MI) Brain-Computer Inte
 ??/01/2025
 
 ### Report
-- [ ] https://www.overleaf.com/9146575821jhxjqvbrdynv#3b2c30
+- [ ] Report
+https://www.overleaf.com/9146575821jhxjqvbrdynv#3b2c30
 
 ## MATLAB Toolbox
 
