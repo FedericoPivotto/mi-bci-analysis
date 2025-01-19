@@ -18,5 +18,6 @@ function [fisher_scores_matrix] = get_fisher_scores(PSD, Pk)
         fisher_scores(i) = numerator / denominator;
     end
     
-    fisher_scores_matrix = reshape(fisher_scores, n_frequencies, n_channels); % Fisher scores matrix [frequencies x channels]
+    % Fisher scores matrix [frequencies x channels]
+    fisher_scores_matrix = reshape(fisher_scores, n_frequencies, n_channels);
 end

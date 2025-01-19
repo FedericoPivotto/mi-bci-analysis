@@ -4,7 +4,7 @@ clc; close all; clear;
 %% Function path
 addpath('function/');
 
-%% Select the most discriminative features for each subject and save them.
+%% Select the most discriminative features for each subject and save them
 
 % Subject ai6
 % Cz: 18, 20, 22

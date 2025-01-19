@@ -25,7 +25,7 @@ function [Tk, Ck, CFbK, Pk, Mk] = get_label_vectors(PSD, EVENT, data_type, class
         end
 
         if ismember(current.TYP, classes)
-            Ck(current.POS:current.END) = current.TYP; % TYP if TYP is 771 or 773, 0 otherwise
+            Ck(current.POS:current.END) = current.TYP;
 
             Pk(current.POS:current.END) = current.TYP;
             if i < n_events

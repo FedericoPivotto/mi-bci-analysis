@@ -1,15 +1,5 @@
 %% Function to evaluate the model for the given MAT file
 function evaluate_model(path_model, dirpath_in, filename, fileext, dirpath_out)
-    % INFO: path_model: 'solution/model/micontinuous/<subject>/<filename_with_ext>', 'solution/model/micontinuous/population/<filename_with_ext>'
-    % INFO: dirpath_in: 'solution/psd/micontinuous/<subject>/', 'solution/psd/micontinuous/population/'
-    % INFO: filename: '<filename_without_ext>'
-    % INFO: fileext: '.mat'
-    % INFO: dirpath_out: 'solution/model/micontinuous/<subject>/', 'solution/model/micontinuous/population/'
-
-    % NOTE: there is the need to use the MAT file in resource/ (think how to organize the MAT files with the most relevant features)
-    % REMEMBER: compute required metrics
-    % NOTE: obviously, the plots need to be saved
-
     % Load the trained model
     model_data = load(char(path_model));
     Model = model_data.Model; % Trained model
@@ -66,10 +56,11 @@ function evaluate_model(path_model, dirpath_in, filename, fileext, dirpath_out)
         'YGrid', 'on');
 
     % Save the accuracy plot
-    image_filename = char(strcat(dirpath_out, 'singleSampleAccuracy.', filename, '.png'));
+    image_filename = char(strcat(dirpath_out, 'singlesampleaccuracy.', filename, '.png'));
     saveas(gcf, image_filename);
-% Application of exponential smoothing to obtain trial based accuracy
-    alpha = 0.97; % Integration parameter: Tip: 0.96-0.98
+
+    % Application of exponential smoothing to obtain trial based accuracy
+    alpha = 0.97; % Integration parameter; tip: 0.96-0.98
     threshold.both_feet = 0.8; % Decision threshold for both feet
     threshold.both_hands = 0.2; % Decision threshold for both hands
     
@@ -81,10 +72,10 @@ function evaluate_model(path_model, dirpath_in, filename, fileext, dirpath_out)
     
     D = 0.5; % Initial value for D(t)
     trial_id = 0; % Trial number from 1
-    i = 1; % variable used to sync the CFbK vector indices values with the indices of the pp vector
+    i = 1; % Variable used to sync the CFbK vector indices values with the indices of the pp vector
 
     decision_taken = false; % Flag to know if a decision has already been made for the current trial
-    % contains trial start, trial end, window in which the decision is taken
+    % Store trial start, trial end, window in which the decision is taken
     trial_info.start = zeros(n_trials,1); 
     trial_info.end = zeros(n_trials,1);
     trial_info.decision_window = zeros(n_trials,1);
@@ -95,10 +86,10 @@ function evaluate_model(path_model, dirpath_in, filename, fileext, dirpath_out)
         if psd_data.LABEL.CFbK(i) == 0
 
             if trial_id > 0
-                trial_info.end(trial_id) = t-1; % saves the index of the ending window of the trial
+                trial_info.end(trial_id) = t-1; % Saves the index of the ending window of the trial
             end
 
-            decision_taken = false; % reset the flag for keeping track if a decision for the current trial has already been made
+            decision_taken = false; % Reset the flag for keeping track if a decision for the current trial has already been made
 
             % Advance in the ContFeed label vector until a value different from 0 is found(a cont feed period has started)
             while psd_data.LABEL.CFbK(i) == 0 
@@ -110,7 +101,7 @@ function evaluate_model(path_model, dirpath_in, filename, fileext, dirpath_out)
             
             D = 0.5;
             trial_id = trial_id + 1;
-            trial_info.start(trial_id) = t; % saves the index of the starting window of the trial
+            trial_info.start(trial_id) = t; % Saves the index of the starting window of the trial
         end
     
         % Exponential smoothing
@@ -119,11 +110,11 @@ function evaluate_model(path_model, dirpath_in, filename, fileext, dirpath_out)
         % Make a decision if threshold reached
         if (D > threshold.both_feet & ~decision_taken)
             decisions(trial_id) = 771; % Both feet decision
-            trial_info.decision_window(trial_id) = t; % saves the index of the windows where the decision is made
+            trial_info.decision_window(trial_id) = t; % Saves the index of the windows where the decision is made
             decision_taken = true;
         elseif (D < threshold.both_hands & ~decision_taken)
             decisions(trial_id) = 773; % Both hands decision
-            trial_info.decision_window(trial_id) = t; % saves the index of the windows where the decision is made
+            trial_info.decision_window(trial_id) = t; % Saves the index of the windows where the decision is made
             decision_taken = true;
         end
         i = i + 1;
@@ -150,7 +141,7 @@ function evaluate_model(path_model, dirpath_in, filename, fileext, dirpath_out)
 
     average_decision_time = num2str(mean(time_for_decision));
 
-    plot_title = strcat('Trial accuracy on testset, with average decision time: ', average_decision_time);
+    plot_title = strcat('Trial accuracy on testset, with average decision time:', {' '}, average_decision_time, ' s');
 
     % Bar plot for accuracies
     figure('Visible', 'off');
@@ -165,7 +156,6 @@ function evaluate_model(path_model, dirpath_in, filename, fileext, dirpath_out)
         'YGrid', 'on');
 
     % Save the accuracy plot
-    image_filename = char(strcat(dirpath_out, 'TrialAccuracy.', filename, '.png'));
+    image_filename = char(strcat(dirpath_out, 'trialaccuracy.', filename, '.png'));
     saveas(gcf, image_filename);
-
 end

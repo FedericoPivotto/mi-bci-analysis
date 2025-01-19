@@ -4,7 +4,7 @@ clc; close all; clear;
 %% Function path
 addpath('function/');
 
-%% Load and process each GDF file separately for both calibration and evaluation files, and save the result.
+%% Load and process each GDF file separately for both calibration and evaluation files, and save the result
 
 % Dataset
 dataset = 'micontinuous';
@@ -103,7 +103,7 @@ end
 dirpath_psd = strcat('psd/', dataset, '/population/');
 % Get MAT files in population directory
 dirpath_population = strcat('gdf/', dataset, '/population/');
-files = dir(fullfile('gdf', dataset, 'population', ['*', fileext.mat])); % dirpath_population, ['*', fileext.mat]));
+files = dir(fullfile('gdf', dataset, 'population', ['*', fileext.mat]));
 filename = strrep({files.name}, fileext.mat, '');
 % Process each MAT file and save PSD in MAT file
 for i = 1:size(filename, 2)

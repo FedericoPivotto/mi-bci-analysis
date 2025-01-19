@@ -1,10 +1,5 @@
 %% Function to compute and save the spectrogram of the given MAT file
 function compute_spectrogram(dirpath_in, filename, fileext, dirpath_out)
-    % INFO: dirpath_in: 'solution/psd/micontinuous/<subject>/', 'solution/psd/micontinuous/population/'
-    % INFO: filename: '<filename_without_ext>'
-    % INFO: fileext: '.mat'
-    % INFO: dirpath_out: 'solution/result/micontinuous/<subject>/spectrogram/' or 'solution/result/micontinuous/population/spectrogram/'
-
     % Load PSD
     filepath = char(strcat(dirpath_in, filename, fileext));
     psd_mat = load(filepath);
@@ -56,7 +51,6 @@ function compute_spectrogram(dirpath_in, filename, fileext, dirpath_out)
         end
     end
     
-    
     activity.both_feet = activity.both(:, :, :, psd_trial.TYP == 771);
     activity.both_hands = activity.both(:, :, :, psd_trial.TYP == 773);
     reference.both_feet = reference.both(:, :, :, psd_trial.TYP == 771);
@@ -71,7 +65,7 @@ function compute_spectrogram(dirpath_in, filename, fileext, dirpath_out)
     % Select meaningful channels for the motor imagery task
     mi_channels = [7, 9, 11]; % C3: 7, Cz: 9, C4: 11
     
-    % Visualize the ERD/ERS averaged across trials for the two MI classes (hint: use the function imagesc())
+    % Plot the ERD/ERS averaged across trials for the two MI classes
     figure('Visible', 'off');
     m = 2; n = 3;
     sgtitle('Average ERD/ERS across Trials');
@@ -81,7 +75,6 @@ function compute_spectrogram(dirpath_in, filename, fileext, dirpath_out)
     
     subplot(m, n, 1);
     imagesc(time_range, psd_mat.FREQ_subset, flip(rot90(mean(ERD.both_hands(:, psd_mat.FREQ_index, mi_channels(1), :), 4), 1), 1), clim);
-    xline([3 4], 'LineWidth', 1);
     set(gca, 'YDir', 'normal');
     subtitle('Channel C3 | Both hands');
     xlabel('Time [s]');
@@ -91,7 +84,6 @@ function compute_spectrogram(dirpath_in, filename, fileext, dirpath_out)
     
     subplot(m, n, 2);
     imagesc(time_range, psd_mat.FREQ_subset, flip(rot90(mean(ERD.both_hands(:, psd_mat.FREQ_index, mi_channels(2), :), 4), 1), 1), clim);
-    xline([3 4], 'LineWidth', 1);
     set(gca, 'YDir', 'normal');
     subtitle('Channel Cz | Both hands');
     xlabel('Time [s]');
@@ -101,7 +93,6 @@ function compute_spectrogram(dirpath_in, filename, fileext, dirpath_out)
     
     subplot(m, n, 3);
     imagesc(time_range, psd_mat.FREQ_subset, flip(rot90(mean(ERD.both_hands(:, psd_mat.FREQ_index, mi_channels(3), :), 4), 1), 1), clim);
-    xline([3 4], 'LineWidth', 1);
     set(gca, 'YDir', 'normal');
     subtitle('Channel C4 | Both hands');
     xlabel('Time [s]');
@@ -113,7 +104,6 @@ function compute_spectrogram(dirpath_in, filename, fileext, dirpath_out)
     
     subplot(m, n, 4);
     imagesc(time_range, psd_mat.FREQ_subset, flip(rot90(mean(ERD.both_feet(:, psd_mat.FREQ_index, mi_channels(1), :), 4), 1), 1), clim);
-    xline([3 4], 'LineWidth', 1);
     set(gca, 'YDir', 'normal');
     subtitle('Channel C3 | Both feet');
     xlabel('Time [s]');
@@ -123,7 +113,6 @@ function compute_spectrogram(dirpath_in, filename, fileext, dirpath_out)
     
     subplot(m, n, 5);
     imagesc(time_range, psd_mat.FREQ_subset, flip(rot90(mean(ERD.both_feet(:, psd_mat.FREQ_index, mi_channels(2), :), 4), 1), 1), clim);
-    xline([3 4], 'LineWidth', 1);
     set(gca, 'YDir', 'normal');
     subtitle('Channel Cz | Both feet');
     xlabel('Time [s]');
@@ -133,7 +122,6 @@ function compute_spectrogram(dirpath_in, filename, fileext, dirpath_out)
     
     subplot(m, n, 6);
     imagesc(time_range, psd_mat.FREQ_subset, flip(rot90(mean(ERD.both_feet(:, psd_mat.FREQ_index, mi_channels(3), :), 4), 1), 1), clim);
-    xline([3 4], 'LineWidth', 1);
     set(gca, 'YDir', 'normal');
     subtitle('Channel C4 | Both feet');
     xlabel('Time [s]');

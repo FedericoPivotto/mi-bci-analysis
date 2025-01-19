@@ -1,10 +1,5 @@
 %% Function to compute and save the feature map of the given MAT file
 function compute_featuremap(dirpath_in, filename, fileext, dirpath_out)
-    % INFO: dirpath_in: 'solution/psd/micontinuous/<subject>/', 'solution/psd/micontinuous/population/'
-    % INFO: filename: '<filename_without_ext>'
-    % INFO: fileext: '.mat'
-    % INFO: dirpath_out: 'solution/result/micontinuous/<subject>/featuremap/' or 'solution/result/micontinuous/population/featuremap/'
-
     % Load file .mat
     filepath = char(strcat(dirpath_in, filename, fileext));
     psd_mat = load(filepath);

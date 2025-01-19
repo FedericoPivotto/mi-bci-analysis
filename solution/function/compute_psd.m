@@ -12,13 +12,12 @@ function compute_psd(dirpath_in, filename, fileext, dirpath_out)
         return;
     end
     
-    % Apply the Laplacian filter with the Laplacian mask provided
+    % Apply the Laplacian filter with the Laplacian mask
     n_channels = h.NS - 1;
     lap_mask = load('resource/laplacian16.mat');
     lap_s = s(:, 1:n_channels) * lap_mask.lap;
     
-    % Compute the PSD over time exploiting the function proc_spectrogram() provided in the moodle.
-    % The parameters for the function are the following:
+    % Compute the PSD over time with these parameters
     PSD_params.wlength = 0.5; % Length of the external window [seconds]
     PSD_params.pshift = 0.25; % Shift of the internal windows [seconds]
     PSD_params.wshift = 0.0625; % Shift of the external window [seconds]
@@ -37,7 +36,7 @@ function compute_psd(dirpath_in, filename, fileext, dirpath_out)
     EVENT.DUR = ceil((h.EVENT.DUR / PSD_params.samplerate) / PSD_params.wshift); % Convert number of samples to number of windows
     EVENT.TYP = h.EVENT.TYP;
     
-    % Save the PSDs, the selected frequencies, the events, and all the information you consider relevant into a .mat file with the same name of the processed GDF
+    % Save the PSDs, the selected frequencies and the events
     if ~exist(char(dirpath_out), 'dir')
        mkdir(char(dirpath_out));
     end

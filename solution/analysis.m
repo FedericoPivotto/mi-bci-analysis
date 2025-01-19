@@ -35,24 +35,24 @@ for i = 1:size(subject, 2)
     dirpath_psd_subject = strcat(dirpath_psd, subject(i), '/');
     % Directory in which to read the GDF
     dirpath_gdf_subject = strcat(dirpath_gdf, subject(i), '/');
-    % Directory in which to save subject Topoplots 'solution/result/micontinuous/<subject>/topoplot/'
+    % Directory in which to save subject topoplots
     dirpath_topoplots_subject = strcat(dirpath_results, subject(i), '/topoplot/');
-    % Directory in which to save subject Spectrograms 'solution/result/micontinuous/<subject>/spectrogram/'
+    % Directory in which to save subject spectrograms
     dirpath_spectrograms_subject = strcat(dirpath_results, subject(i), '/spectrogram/');
-    % Directory in which to save subject Feature maps 'solution/result/micontinuous/<subject>/featuremap/'
+    % Directory in which to save subject feature maps
     dirpath_featuremaps_subject = strcat(dirpath_results, subject(i), '/featuremap/');
 
-    % Get MAT files in subject directory for psd
+    % Get MAT files in subject directory for PSD
     dirpath_subject_psd = cell2mat(dirpath_psd_subject);
     psd_files = dir(fullfile(dirpath_subject_psd, ['*', fileext.mat]));
     filename_psd = strrep({psd_files.name}, fileext.mat, '');
 
-    % Get MAT(concatenated GDFs) files in subject directory for gdf
+    % Get MAT(concatenated GDFs) files in subject directory for GDF
     dirpath_subject_gdf = cell2mat(dirpath_gdf_subject);
     gdf_files = dir(fullfile(dirpath_subject_gdf, ['*', fileext.mat]));
     filename_gdf = strrep({gdf_files.name}, fileext.mat, '');
 
-    % Compute topoplots for retrieved gdf files
+    % Compute topoplots for retrieved GDF files
     for h = 1:size(filename_gdf,2)
         if contains(filename_gdf(1,h), 'online')
             dirpath_topoplots_subject_type = strcat(dirpath_topoplots_subject, 'online/');
