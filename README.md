@@ -10,6 +10,7 @@ https://www.overleaf.com/9146575821jhxjqvbrdynv#3b2c30
 
 ### `biosig`
 ```matlab
+% Toolbox version may be different
 disp('[config] - Adding biosig toolbox');
 addpath(genpath('<absolute-path>\mi-bci-analysis\toolbox\biosig\biosig\t200_FileAccess'));
 addpath(genpath('<absolute-path>\mi-bci-analysis\toolbox\biosig\biosig\t250_ArtifactPreProcessingQualityControl'));
@@ -17,6 +18,7 @@ addpath(genpath('<absolute-path>\mi-bci-analysis\toolbox\biosig\biosig\t250_Arti
 
 ### `eeglab`
 ```matlab
+% Toolbox version may be different
 disp('[config] - Adding eeglab toolbox');
 addpath(genpath('<absolute-path>\mi-bci-analysis\toolbox\eeglab\eeglab2024.2'));
 ```
@@ -34,8 +36,8 @@ Each participant completed at least two recording days:
 https://cloud.dei.unipd.it/index.php/s/DLJfJccgFnFiDZY
 
 ## Instructions
-1. Create `dataset/` folder and insert `micontinuous` dataset.
-2. Create `toolbox/` folder and insert `biosig` and `eeglab` toolboxes.
+1. Create `dataset/` folder in root directory and insert `micontinuous` dataset.
+2. Create `toolbox/` folder in root directory and insert `biosig` and `eeglab` toolboxes.
 3. Run `generation.m` script.
 4. Run `analysis.m` script.
 5. Run `selection.m` script.
