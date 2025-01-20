@@ -49,9 +49,9 @@ https://cloud.dei.unipd.it/index.php/s/DLJfJccgFnFiDZY
 - Riccardo Zerbinati, 2158676, riccardo.zerbinati@studenti.unipd.it
 
 ### Contribution
-| Member             | Work                                                                                           |
-| ------------------ | ---------------------------------------------------------------------------------------------- |
-| Federico Pivotto   | Data generation, training workflow, evaluation workflow, feature selection, selection workflow |
-| Alessandro Bozzon  | Topoplot computation, analysis workflow, feature selection, performance metrics                |
-| Riccardo Simion    | Spectrogram computation, model training, feature selection                                     |
-| Riccardo Zerbinati | Feature map computation, model evaluation, feature selection                                   |
+| Member             | Work                                                                                                              |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| Federico Pivotto   | Project structure, data generation, training workflow, evaluation workflow, feature selection, selection workflow |
+| Alessandro Bozzon  | Topoplot computation, analysis workflow, feature selection, performance metrics                                   |
+| Riccardo Simion    | Spectrogram computation, model training, feature selection                                                        |
+| Riccardo Zerbinati | Feature map computation, model evaluation, feature selection                                                      |
