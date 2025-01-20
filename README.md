@@ -2,28 +2,9 @@
 Analysis of data collected during a 3-day Motor Imagery (MI) Brain-Computer Interface (BCI) experiment involving 8 healthy participants.
 
 ## TODO
-
-### Analysis
-- [x] `generation.m`
-- [x] `compute_topoplot.m`
-- [x] `compute_spectrogram.m`
-- [x] `compute_featuremap.m`
-- [x] `analysis.m`
-
-### Classification
-- [x] `selection.m`
-- [x] `train_model.m`
-- [x] `training.m`
-- [x] `evaluate_model.m`
-- [x] `evaluation.m`
-
-### Report
 - [ ] Report
 
 https://www.overleaf.com/9146575821jhxjqvbrdynv#3b2c30
-
-### Deadline
-??/01/2025
 
 ## MATLAB Toolbox
 
