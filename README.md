@@ -2,8 +2,8 @@
 Analysis of data collected during a 3-day Motor Imagery (MI) Brain-Computer Interface (BCI) experiment involving 8 healthy participants.
 
 ## TODO
-- [ ] *Report*: write and upload in the repository
-- [ ] *Project*: delivery on Moodle platform
+- [ ] **Report**: write and upload in the repository
+- [ ] **Project**: delivery on Moodle platform
 
 https://www.overleaf.com/9146575821jhxjqvbrdynv#3b2c30
 
