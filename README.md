@@ -5,8 +5,6 @@ Analysis of data collected during a 3-day Motor Imagery (MI) Brain-Computer Inte
 - [ ] **Report**: write and upload in the repository
 - [ ] **Project**: create release, make repository public, deliver on Moodle
 
-https://www.overleaf.com/9146575821jhxjqvbrdynv#3b2c30
-
 ## MATLAB Toolbox
 
 ### `biosig`
