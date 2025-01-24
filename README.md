@@ -11,17 +11,19 @@ https://www.overleaf.com/9146575821jhxjqvbrdynv#3b2c30
 
 ### `biosig`
 ```matlab
-% Toolbox version may be different
 disp('[config] - Adding biosig toolbox');
 addpath(genpath('<absolute-path>\mi-bci-analysis\toolbox\biosig\biosig\t200_FileAccess'));
 addpath(genpath('<absolute-path>\mi-bci-analysis\toolbox\biosig\biosig\t250_ArtifactPreProcessingQualityControl'));
+
+% NOTE: Toolbox version may be different
 ```
 
 ### `eeglab`
 ```matlab
-% Toolbox version may be different
 disp('[config] - Adding eeglab toolbox');
 addpath(genpath('<absolute-path>\mi-bci-analysis\toolbox\eeglab\eeglab2024.2'));
+
+% NOTE: Toolbox version may be different
 ```
 
 ## Dataset
@@ -51,10 +53,10 @@ https://cloud.dei.unipd.it/index.php/s/DLJfJccgFnFiDZY
 - Riccardo Simion, 2157564, riccardo.simion@studenti.unipd.it
 - Riccardo Zerbinati, 2158676, riccardo.zerbinati@studenti.unipd.it
 
-### Contribution
-| Member             | Work                                                                                                              |
-| ------------------ | ----------------------------------------------------------------------------------------------------------------- |
-| Federico Pivotto   | Project structure, data generation, training workflow, evaluation workflow, feature selection, selection workflow |
-| Alessandro Bozzon  | Topoplot computation, analysis workflow, feature selection, performance metrics                                   |
-| Riccardo Simion    | Spectrogram computation, model training, feature selection                                                        |
-| Riccardo Zerbinati | Feature map computation, model evaluation, feature selection                                                      |
+### Contributions
+| Member             | Workload | Work                                                                                                                                                                 |
+| ------------------ | :------: |--------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Federico Pivotto   | 25%      | Project structure, data generation, training workflow, evaluation workflow, feature selection, selection workflow, model training and evalutation chapter in report. |
+| Alessandro Bozzon  | 25%      | Topoplot computation, analysis workflow, feature selection, performance metrics, topoplot chapter in report.                                                         |
+| Riccardo Simion    | 25%      | Spectrogram computation, model training, feature selection, spectrogram chapter in report.                                                                           |
+| Riccardo Zerbinati | 25%      | Feature map computation, model evaluation, feature selection, feature map chapter in report.                                                                         |
