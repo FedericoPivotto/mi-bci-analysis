@@ -47,6 +47,12 @@ https://cloud.dei.unipd.it/index.php/s/DLJfJccgFnFiDZY
 6. Run `training.m` script.
 7. Run `evaluation.m` script.
 
+### Tested Environments
+- Local machine, Windows 11, MATLAB R2024b
+- Local machine, MacOS Sequoia, MATLAB R2024b
+- Local machine, Windows 11, MATLAB R2023a
+- Local machine, Windows 11, MATLAB R2023b
+
 ## Authors
 - Federico Pivotto, 2121720, federico.pivotto@studenti.unipd.it
 - Alessandro Bozzon, 2122185, alessandro.bozzon@studenti.unipd.it
