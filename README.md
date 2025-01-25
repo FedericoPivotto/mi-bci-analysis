@@ -58,9 +58,9 @@ https://cloud.dei.unipd.it/index.php/s/DLJfJccgFnFiDZY
 - Riccardo Zerbinati, 2158676, riccardo.zerbinati@studenti.unipd.it
 
 ### Contributions
-| Member             | Workload | Work                                                                                                                                                                 |
-| ------------------ | :------: |--------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Federico Pivotto   | 25%      | Project structure, data generation, training workflow, evaluation workflow, feature selection, selection workflow, model training and evalutation chapter in report. |
-| Alessandro Bozzon  | 25%      | Topoplot computation, analysis workflow, feature selection, performance metrics, topoplot chapter in report.                                                         |
-| Riccardo Simion    | 25%      | Spectrogram computation, model training, feature selection, spectrogram chapter in report.                                                                           |
-| Riccardo Zerbinati | 25%      | Feature map computation, model evaluation, feature selection, feature map chapter in report.                                                                         |
+| Member             | Workload | Work                                                                                                                                                                |
+| ------------------ | :------: |-------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Federico Pivotto   | 25%      | Project structure, data generation, training workflow, evaluation workflow, feature selection, selection workflow, model training and evalutation chapter in report |
+| Alessandro Bozzon  | 25%      | Topoplot computation, analysis workflow, feature selection, performance metrics, topoplot chapter in report                                                         |
+| Riccardo Simion    | 25%      | Spectrogram computation, model training, feature selection, spectrogram chapter in report                                                                           |
+| Riccardo Zerbinati | 25%      | Feature map computation, model evaluation, feature selection, feature map chapter in report                                                                         |
