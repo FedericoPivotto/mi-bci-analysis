@@ -1,9 +1,6 @@
 # MI BCI Analysis
 Analysis of data collected during a 3-day Motor Imagery (MI) Brain-Computer Interface (BCI) experiment involving 8 healthy participants.
 
-## TODO
-- [ ] **Project**: create release, make repository public, deliver on Moodle
-
 ## MATLAB Toolbox
 
 ### `biosig`
