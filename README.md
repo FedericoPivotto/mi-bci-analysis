@@ -33,8 +33,8 @@ Each participant completed at least two recording days:
 https://cloud.dei.unipd.it/index.php/s/DLJfJccgFnFiDZY
 
 ## Instructions
-1. Create `dataset/` folder in root directory and insert `micontinuous` dataset.
-2. Create `toolbox/` folder in root directory and insert `biosig` and `eeglab` toolboxes.
+1. Create `toolbox/` folder in root directory and insert `biosig` and `eeglab` toolboxes.
+2. Create `dataset/` folder in root directory and insert `micontinuous` dataset.
 3. Run `generation.m` script.
 4. Run `analysis.m` script.
 5. Run `selection.m` script.
