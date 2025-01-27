@@ -26,7 +26,7 @@ The data was recorded using a 16-channel EEG amplifier at a sampling rate of 512
 Each participant completed at least two recording days:
 
 - Day 1: 3 "offline" runs (calibration, without real feedback) and 2 "online" runs
-(with real feedback).
+(with real feedback);
 - Day 2 and Day 3: 2 "online" runs per day.
 
 ### Resource
